@@ -1,0 +1,16 @@
+{
+    "name": "Daily Expenses",
+    "description": "Keep track of your daily expenses within a simplistic form",
+    "version": "0.1",
+    "developer": {
+        "name": "Luka Zitnik"
+    },
+    "default_locale": "en",
+    "locales": {
+    },
+    "launch_path": "/index.html",
+    "icons": {
+        "60": "/images/icon-60.png",
+        "128": "/images/icon-128.png"
+    }
+}
