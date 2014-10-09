@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Daily Expenses</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            html, body {
+                margin: 0px;
+                padding: 0px;
+                font-size: 10px;
+                background-color: #FFF;
+            }
+        </style>
+        <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/headers.css" />
+        <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/lists.css" />
+        <script src="lib/knockout-3.2.0.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body role="application">
+        <section role="region">
+            <header>
+                <menu type="toolbar">
+                    <a href="#">
+                        <span class="icon icon-add">Add</span>
+                    </a>
+                </menu>
+                <h1>Daily Expenses</h1>
+            </header>
+        </section>
+        <section data-type="list">
+            <header>
+                <aside class="pack-end">
+                    <span>RSD 810.00</span>
+                </aside>
+                <span>Oct 2014</span>
+            </header>
+            <ul>
+                <li>
+                    <aside class="pack-end">
+                        <p>RSD 390.00</p>
+                    </aside>
+                    <p>Oct 8, 2014</p>
+                </li>
+                <li>
+                    <aside class="pack-end">
+                        <p>RSD 420.00</p>
+                    </aside>
+                    <p>Oct 7, 2014</p>
+                </li>
+            </ul>
+        </section>
+    </body>
+</html>
