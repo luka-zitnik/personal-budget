@@ -14,8 +14,8 @@
         </style>
         <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/headers.css" />
         <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/lists.css" />
-        <script src="lib/knockout-3.2.0.js"></script>
-        <script src="app.js"></script>
+        <script src="lib/knockout-3.2.0.js" defer></script>
+        <script src="app.js" defer></script>
     </head>
     <body role="application">
         <section role="region">
@@ -31,22 +31,16 @@
         <section data-type="list">
             <header>
                 <aside class="pack-end">
-                    <span>RSD 810.00</span>
+                    <span>RSD <span data-bind="text: sum"></span></span>
                 </aside>
-                <span>Oct 2014</span>
+                <span data-bind="text: month"></span>
             </header>
-            <ul>
+            <ul data-bind="foreach: expenses">
                 <li>
                     <aside class="pack-end">
-                        <p>RSD 390.00</p>
+                        <p>RSD <span data-bind="text: amount"></span></p>
                     </aside>
-                    <p>Oct 8, 2014</p>
-                </li>
-                <li>
-                    <aside class="pack-end">
-                        <p>RSD 420.00</p>
-                    </aside>
-                    <p>Oct 7, 2014</p>
+                    <p data-bind="text: date"></p>
                 </li>
             </ul>
         </section>
