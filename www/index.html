@@ -28,7 +28,7 @@
                 <h1>Daily Expenses</h1>
             </header>
         </section>
-        <section data-type="list">
+        <section data-type="list" data-bind="foreach: monthlyExpensesList">
             <header>
                 <aside class="pack-end">
                     <span>RSD <span data-bind="text: monthlySum"></span></span>

@@ -3,14 +3,10 @@ function DailySum(date, amount) {
     this.dailySum = ko.observable(amount);
 }
 
-function DailyExpenses() {
+function DailyExpenses(month, dailyExpenses) {
     var self = this;
 
-    this.dailyExpensesList = ko.observableArray([
-        new DailySum('10 Oct, 2014', 420.00),
-        new DailySum('8 Oct, 2014', 390.00),
-        new DailySum('7 Oct, 2014', 420.00)
-    ]);
+    this.dailyExpensesList = ko.observableArray(dailyExpenses);
 
     this.monthlySum = ko.computed(function() {
         var i = 0,
@@ -23,7 +19,24 @@ function DailyExpenses() {
         return sum;
     });
 
-    this.month = "Oct 2014";
+    this.month = month;
 }
 
-ko.applyBindings(new DailyExpenses());
+function MonthlyExpenses() {
+
+    this.monthlyExpensesList = ko.observableArray([
+        new DailyExpenses("Oct 2014", [
+            new DailySum('10 Oct, 2014', 420.00),
+            new DailySum('8 Oct, 2014', 390.00),
+            new DailySum('7 Oct, 2014', 420.00)
+        ]),
+        new DailyExpenses("Sep 2014", [
+            new DailySum('11 Sep, 2014', 320.00),
+            new DailySum('9 Sep, 2014', 290.00),
+            new DailySum('8 Sep, 2014', 320.00)
+        ])
+    ]);
+
+}
+
+ko.applyBindings(new MonthlyExpenses());
