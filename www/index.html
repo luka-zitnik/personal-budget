@@ -31,14 +31,14 @@
         <section data-type="list">
             <header>
                 <aside class="pack-end">
-                    <span>RSD <span data-bind="text: sum"></span></span>
+                    <span>RSD <span data-bind="text: monthlySum"></span></span>
                 </aside>
                 <span data-bind="text: month"></span>
             </header>
-            <ul data-bind="foreach: expenses">
+            <ul data-bind="foreach: dailyExpensesList">
                 <li>
                     <aside class="pack-end">
-                        <p>RSD <span data-bind="text: amount"></span></p>
+                        <p>RSD <span data-bind="text: dailySum"></span></p>
                     </aside>
                     <p data-bind="text: date"></p>
                 </li>
