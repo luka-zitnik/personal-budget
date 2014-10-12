@@ -8,7 +8,7 @@ function DailyExpenses(month, dailyExpenses) {
 
     this.dailyExpensesList = ko.observableArray(dailyExpenses);
 
-    this.monthlySum = ko.computed(function() {
+    this.monthlySum = ko.computed(function () {
         var i = 0,
             sum = 0;
 
@@ -22,21 +22,99 @@ function DailyExpenses(month, dailyExpenses) {
     this.month = month;
 }
 
-function MonthlyExpenses() {
-
-    this.monthlyExpensesList = ko.observableArray([
-        new DailyExpenses("Oct 2014", [
-            new DailySum('10 Oct, 2014', 420.00),
-            new DailySum('8 Oct, 2014', 390.00),
-            new DailySum('7 Oct, 2014', 420.00)
-        ]),
-        new DailyExpenses("Sep 2014", [
-            new DailySum('11 Sep, 2014', 320.00),
-            new DailySum('9 Sep, 2014', 290.00),
-            new DailySum('8 Sep, 2014', 320.00)
-        ])
-    ]);
-
+function MonthlyExpenses(monthlyExpenses) {
+    this.monthlyExpensesList = ko.observableArray(monthlyExpenses);
 }
 
-ko.applyBindings(new MonthlyExpenses());
+function writeTestDBData() {
+    var dbName = "DailyExpenses",
+        dbVersion = 6;
+
+    window.indexedDB.open(dbName, dbVersion).onsuccess = function (event) {
+
+        var db = event.target.result,
+            transaction = db.transaction("daily_expenses", "readwrite"),
+            data = [
+                {
+                    date: "2014-10-10",
+                    label: "lunch",
+                    amount: 420.00
+                },
+                {
+                    date: "2014-10-08",
+                    label: "lunch",
+                    amount: 390.00
+                },
+                {
+                    date: "2014-10-07",
+                    label: "lunch",
+                    amount: 420.00
+                },
+                {
+                    date: "2014-09-07",
+                    label: "lunch",
+                    amount: 1100.00
+                }
+            ],
+            objectStore = transaction.objectStore("daily_expenses"),
+            request,
+            i;
+
+        for (i = 0; i < data.length; ++i) {
+            request = objectStore.add(data[i]);
+        }
+    };
+}
+
+(function () {
+
+    var openDBRequest,
+        dbName = "DailyExpenses",
+        dbVersion = 6;
+
+    if (!window.indexedDB) {
+        window.alert("Your browser doesn't support a stable version of IndexedDB.");
+        return;
+    }
+
+    openDBRequest = window.indexedDB.open(dbName, dbVersion);
+
+    openDBRequest.onerror = function (event) {
+        window.alert(event.target.error.message);
+    };
+
+    openDBRequest.onupgradeneeded = function (event) {
+        var db = event.target.result,
+            objectStore;
+
+        if (event.oldVersion !== 0) {
+            db.deleteObjectStore("daily_expenses");
+        }
+
+        objectStore = db.createObjectStore("daily_expenses", {autoIncrement: true});
+        objectStore.createIndex("date", "date", {unique: false});
+    };
+
+    openDBRequest.onsuccess = function (event) {
+        var db = event.target.result,
+            transaction = db.transaction("daily_expenses", "readonly"),
+            objectStore = transaction.objectStore("daily_expenses"),
+            monthlyExpenses = [],
+            dailyExpenses = [];
+
+        objectStore.openCursor().onsuccess = function (event) {
+            var cursor = event.target.result;
+
+            if (cursor) {
+                dailyExpenses.push(new DailySum(cursor.value.date, cursor.value.amount));
+                cursor.continue();
+            }
+            else {
+                // No more entries
+                monthlyExpenses.push(new DailyExpenses("all together", dailyExpenses));
+                ko.applyBindings(new MonthlyExpenses(monthlyExpenses));
+            }
+        };
+    };
+
+}());
