@@ -28,7 +28,7 @@ function MonthlyExpenses(monthlyExpenses) {
 
 function writeTestDBData() {
     var dbName = "DailyExpenses",
-        dbVersion = 6;
+        dbVersion = 7;
 
     window.indexedDB.open(dbName, dbVersion).onsuccess = function (event) {
 
@@ -54,6 +54,11 @@ function writeTestDBData() {
                     date: "2014-09-07",
                     label: "lunch",
                     amount: 1100.00
+                },
+                {
+                    date: "2014-09-07",
+                    label: "dinner",
+                    amount: 77.00
                 }
             ],
             objectStore = transaction.objectStore("daily_expenses"),
@@ -70,7 +75,7 @@ function writeTestDBData() {
 
     var openDBRequest,
         dbName = "DailyExpenses",
-        dbVersion = 6;
+        dbVersion = 7;
 
     if (!window.indexedDB) {
         window.alert("Your browser doesn't support a stable version of IndexedDB.");
@@ -88,6 +93,8 @@ function writeTestDBData() {
             objectStore;
 
         if (event.oldVersion !== 0) {
+
+            // It wasn't possible to work with data, so just delete
             db.deleteObjectStore("daily_expenses");
         }
 
@@ -99,19 +106,45 @@ function writeTestDBData() {
         var db = event.target.result,
             transaction = db.transaction("daily_expenses", "readonly"),
             objectStore = transaction.objectStore("daily_expenses"),
-            monthlyExpenses = [],
-            dailyExpenses = [];
+            dailyExpensesHash = {};
 
         objectStore.openCursor().onsuccess = function (event) {
-            var cursor = event.target.result;
+            var cursor = event.target.result,
+                monthlyExpenses = [],
+                dailyExpenses = [],
+                month,
+                date,
+                amount,
+                monthIndex,
+                dateIndex;
 
             if (cursor) {
-                dailyExpenses.push(new DailySum(cursor.value.date, cursor.value.amount));
+                month = cursor.value.date.substring(0, 7);
+                date = cursor.value.date;
+                amount = cursor.value.amount;
+
+                dailyExpensesHash[month] || (dailyExpensesHash[month] = {});
+
+                if (dailyExpensesHash[month][date]) {
+                    dailyExpensesHash[month][date] += amount;
+                }
+                else {
+                    dailyExpensesHash[month][date] = amount;
+                }
+
                 cursor.continue();
             }
             else {
+
                 // No more entries
-                monthlyExpenses.push(new DailyExpenses("all together", dailyExpenses));
+                for (monthIndex in dailyExpensesHash) {
+                    dailyExpenses = [];
+                    for (dateIndex in dailyExpensesHash[monthIndex]) {
+                        dailyExpenses.push(new DailySum(dateIndex, dailyExpensesHash[monthIndex][dateIndex]));
+                    }
+                    monthlyExpenses.push(new DailyExpenses(monthIndex, dailyExpenses));
+                }
+
                 ko.applyBindings(new MonthlyExpenses(monthlyExpenses));
             }
         };
