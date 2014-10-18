@@ -43,6 +43,23 @@ var Store = {
 
     },
 
+    insert: function (storeValue) {
+        var self = this,
+            openDBRequest;
+
+        openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
+
+        openDBRequest.onerror = this.dbErrorHandler;
+
+        openDBRequest.onsuccess = function (event) {
+            var db = event.target.result,
+                transaction = db.transaction(self.storeName, "readwrite"),
+                objectStore = transaction.objectStore(self.storeName);
+
+            objectStore.add(storeValue);
+        };
+    },
+
     dbErrorHandler: function (event) {
         window.alert(event.target.error.message);
     },
