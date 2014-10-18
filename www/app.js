@@ -51,11 +51,16 @@ function MonthlyExpenses(monthlyExpenses) {
     this.monthlyExpensesList = ko.observableArray(monthlyExpenses);
 
     this.addExpense = function () {
-        var formElements = document.getElementById("add-expense-view").querySelector("form").elements,
+        var form = document.getElementById("add-expense-view").querySelector("form"),
+            formElements = form.elements,
             label = formElements.label.value,
             date = formElements.date.value,
             month = date.substring(0, 7),
             amount = parseFloat(formElements.amount.value);
+
+        if (form.checkValidity() === false) {
+            return;
+        }
 
         this.closeAddExpenseView();
         this.updateMonthlyExpensesList(month, date, amount);
