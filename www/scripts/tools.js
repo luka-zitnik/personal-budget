@@ -1,6 +1,6 @@
 function writeTestDBData() {
     var dbName = "DailyExpenses",
-        dbVersion = 7;
+        dbVersion = 1;
 
     window.indexedDB.open(dbName, dbVersion).onsuccess = function (event) {
 
