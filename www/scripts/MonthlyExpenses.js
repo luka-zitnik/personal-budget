@@ -43,7 +43,7 @@ function MonthlyExpenses(monthlyExpenses) {
     };
 
     this.persistIntoDB = function (date, label, amount) {
-        Store.insert({date: date, label: label, amount: amount});
+        store.insert({date: date, label: label, amount: amount});
     };
 
     this.openAddExpenseView = function () {

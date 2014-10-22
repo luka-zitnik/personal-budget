@@ -1,4 +1,4 @@
-var Store = {
+var store = {
 
     dbName: "DailyExpenses",
     dbVersion: 1,

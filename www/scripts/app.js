@@ -1,7 +1,7 @@
-var App = {
+var app = {
 
     initialize: function () {
-        Store.each(this.aggregateStoreValues, this.displayStoreValues.bind(this));
+        store.each(this.aggregateStoreValues, this.displayStoreValues.bind(this));
     },
 
     aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
@@ -44,4 +44,4 @@ var App = {
 
 };
 
-App.initialize();
+app.initialize();
