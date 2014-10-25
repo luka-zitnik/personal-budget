@@ -270,23 +270,50 @@ var currency = {
         "ZW": "ZWD"  // Zimbabwe: Zimbabwe dollar
     },
 
-    proxyRequestForIsoCountryCode: function (latitude, longitude) {
-        window.placefinder.requestIsoCountryCode(latitude, longitude, "window.currency.yqlCallback");
+    initialize: function() {
+        this.requestForDeviceLocation();
+    },
+
+    requestForDeviceLocation: function() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                this.proxyRequestForIsoCountryCode,
+                function(positionError) {
+                    console.warn(positionError);
+                }
+            );
+        }
+    },
+
+    proxyRequestForIsoCountryCode: function (position) {
+        placefinder.requestIsoCountryCode(
+            position.coords.latitude,
+            position.coords.longitude,
+            "window.currency.yqlCallback"
+        );
     },
 
     yqlCallback: function (data) {
         var countryCode,
             currencyCode;
 
-        console.log(data);
-
         try {
             countryCode = data.query.results.Result.countrycode; // May be null, even results may be null
             currencyCode = this.isoCountryToCurrencyMap[countryCode];
-            console.log(currencyCode);
+            this.suggestCurrency(currencyCode);
         }
         catch(error) {
-            console.error(error);
+            console.warn(error);
+        }
+    },
+
+    // TODO Show dialog with options "Yes", "Let me choose a different currency" and "Not now"
+    suggestCurrency: function(currencyCode) {
+        if (confirm("Do you want to set \"" + currencyCode + "\" as rour currency inside this app?")) {
+            console.log("cool");
+        }
+        else {
+            console.log("that's too bad");
         }
     }
 
