@@ -14,6 +14,11 @@ var currencySelector = {
 
     select: function(value) {
         this.selected(value);
+    },
+
+    ok: function() {
+        currency.setChosenCurrencyCode(this.selected());
+        this.close();
     }
 
 };
