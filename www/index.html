@@ -40,7 +40,7 @@
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/lists.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/input_areas.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/buttons.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/confirm.css" />
+        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/action_menu.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/value_selector.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
@@ -138,7 +138,7 @@
                 </ul>
             </section>
         </article>
-        <form data-type="confirm" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
+        <form data-type="action" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
             <section>
                 <p>
                     Do you want to use "<span data-bind="text: suggestedCurrency"></span>"
@@ -146,11 +146,9 @@
                 </p>
             </section>
             <menu>
-                <ul style="border-top: none">
-                    <li><button type="button" data-bind="click: useSuggested"class="full recommend">Yes</button></li>
-                    <li><button type="button" data-bind="click: chooseAnother" class="full">Let me choose a different currency</button></li>
-                    <li><button type="button" data-bind="click: close" class="full">Not now</button></li>
-                </ul>
+                <button type="button" data-bind="click: useSuggested"class="full recommend">Yes</button>
+                <button type="button" data-bind="click: chooseAnother" class="full">Let me choose a different currency</button>
+                <button type="button" data-bind="click: close" class="full">Not now</button>
             </menu>
         </form>
         <form data-type="value-selector" role="dialog" id="currency-select-dialog" data-bind="visible: visible">

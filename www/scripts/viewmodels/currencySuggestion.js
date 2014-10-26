@@ -9,6 +9,7 @@ var currencySuggestion = {
     },
 
     chooseAnother: function() {
+        currencySelector.open();
         this.close();
     },
 
@@ -20,5 +21,5 @@ var currencySuggestion = {
     close: function() {
         this.visible(false);
     }
-    
+
 };
