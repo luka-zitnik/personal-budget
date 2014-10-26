@@ -20,4 +20,5 @@ var currencySuggestion = {
     close: function() {
         this.visible(false);
     }
+    
 };

@@ -17,6 +17,10 @@ var options = {
 
     close: function() {
         this.containerNode.setAttribute("aria-hidden", "true");
+    },
+
+    openCurrencySelector: function() {
+        currencySelector.open();
     }
 
 };

@@ -272,12 +272,10 @@ var currency = {
         "ZW": "ZWD"  // Zimbabwe: Zimbabwe dollar
     },
 
-    suggestedOnce: false,
-
     getChosenCurrencyCode: function() {
         var currencyCode = localStorage.getItem(this.storageKey);
 
-        if (currencyCode === null && this.suggestedOnce === false) {
+        if (currencyCode === null) {
             this.requestForDeviceLocation();
         }
 

@@ -32,20 +32,26 @@
                 margin: 0px;
                 list-style: outside none none;
             }
+            form[role=dialog] {
+                z-index: 101 !important;
+            }
         </style>
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/headers.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/lists.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/input_areas.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/buttons.css" />
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/confirm.css" />
+        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/value_selector.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
+        <script src="library/underscore-1.7.0.js" defer></script>
         <script src="library/knockout-3.2.0.js" defer></script>
         <script src="scripts/viewmodels/toolbar.js" defer></script>
         <script src="scripts/viewmodels/options.js" defer></script>
         <script src="scripts/viewmodels/addExpense.js" defer></script>
         <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
+        <script src="scripts/viewmodels/currencySelector.js" defer></script>
         <script src="scripts/viewmodels/DailySum.js" defer></script>
         <script src="scripts/viewmodels/DailyExpenses.js" defer></script>
         <script src="scripts/viewmodels/monthlyExpenses.js" defer></script>
@@ -127,7 +133,7 @@
                 <ul class="compact">
                     <li>
                         <label>Currency</label>
-                        <button type="button" class="icon icon-dialog" data-bind="text: currencyCode"></button>
+                        <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
                     </li>
                 </ul>
             </section>
@@ -146,6 +152,21 @@
                     <li><button type="button" data-bind="click: close" class="full">Not now</button></li>
                 </ul>
             </menu>
+        </form>
+        <form data-type="value-selector" role="dialog" id="currency-select-dialog" data-bind="visible: visible">
+            <section class="scrollable">
+                <h1>Select Currency</h1>
+                <ol role="listbox" data-bind="foreach: currenciesList">
+                    <li role="option" data-bind="attr: { 'aria-selected': $data === $parent.selected() }">
+                        <label role="presentation" data-bind="click: $parent.select.bind($parent, $data)">
+                            <span data-bind="text: $data"></span>
+                        </label>
+                    </li>
+                </ol>
+                <menu>
+                    <button class="affirmative full">OK</button>
+                </menu>
+            </section>
         </form>
     </body>
 </html>
