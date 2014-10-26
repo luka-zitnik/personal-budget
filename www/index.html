@@ -86,21 +86,21 @@
                 </header>
             </section>
             <section>
-                <form>
+                <form data-bind="submit: addExpense">
                     <p>
-                        <input name="label" type="text" required="" placeholder="Enter label">
+                        <input data-bind="value: label" name="label" type="text" required="" placeholder="How do you name this expense?">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input name="amount" type="number" step="0.01" required="" placeholder="Enter amount">
+                        <input data-bind="value: amount" name="amount" type="number" step="0.01" required="" placeholder="How much did you spend?">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input name="date" type="text" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="Enter date">
+                        <input data-bind="value: date" name="date" type="text" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="What was the date?">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <button type="button" data-bind="click: addExpense">Add</button>
+                        <button>Add</button>
                     </p>
                 </form>
             </section>
