@@ -1,11 +1,13 @@
 var addExpense = {
 
+    containerNode: document.getElementById("add-expense-view"),
+
     open: function() {
-        document.getElementById("add-expense-view").setAttribute("aria-hidden", "false");
+        this.containerNode.setAttribute("aria-hidden", "false");
     },
 
     addExpense: function () {
-        var form = document.getElementById("add-expense-view").querySelector("form"),
+        var form = this.containerNode.querySelector("form"),
             formElements = form.elements,
             label = formElements.label.value,
             date = formElements.date.value,
@@ -26,7 +28,7 @@ var addExpense = {
     },
 
     close: function () {
-        document.getElementById("add-expense-view").setAttribute("aria-hidden", "true");
+        this.containerNode.setAttribute("aria-hidden", "true");
     }
 
 };
