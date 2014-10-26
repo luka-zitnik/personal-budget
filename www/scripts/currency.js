@@ -1,5 +1,7 @@
 var currency = {
 
+    storageKey: "currency",
+
     // ISO country code standard part full name is ISO 3166-1 alpha-2
     // ISO currency code standard full name is ISO 4217
     //
@@ -270,15 +272,31 @@ var currency = {
         "ZW": "ZWD"  // Zimbabwe: Zimbabwe dollar
     },
 
-    initialize: function() {
-        this.requestForDeviceLocation();
+    getChosenCurrencyCode: function() {
+        var currencyCode = localStorage.getItem(this.storageKey);
+
+        if (currencyCode === null) {
+            this.requestForDeviceLocation();
+        }
+
+        return currencyCode;
+    },
+
+    setChosenCurrencyCode: function(currencyCode) {
+        localStorage.setItem(this.storageKey, currencyCode);
+        dispatchEvent(new CustomEvent("currencyCodeChanged", {
+            detail: { newCurrencyCode: currencyCode }
+        }));
     },
 
     requestForDeviceLocation: function() {
+        var self = this;
+
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 this.proxyRequestForIsoCountryCode,
                 function(positionError) {
+                    self.suggestCurrencySelection();
                     console.warn(positionError);
                 }
             );
@@ -300,21 +318,15 @@ var currency = {
         try {
             countryCode = data.query.results.Result.countrycode; // May be null, even results may be null
             currencyCode = this.isoCountryToCurrencyMap[countryCode];
-            this.suggestCurrency(currencyCode);
+            currencySuggestion.open(currencyCode);
         }
         catch(error) {
+            this.suggestCurrencySelection();
             console.warn(error);
         }
     },
 
-    // TODO Show dialog with options "Yes", "Let me choose a different currency" and "Not now"
-    suggestCurrency: function(currencyCode) {
-        if (confirm("Do you want to set \"" + currencyCode + "\" as rour currency inside this app?")) {
-            console.log("cool");
-        }
-        else {
-            console.log("that's too bad");
-        }
+    suggestCurrencySelection: function() {
     }
 
 };

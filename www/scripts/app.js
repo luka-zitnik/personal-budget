@@ -1,7 +1,20 @@
 var app = {
 
+    views: {
+        toolbar: document.querySelector("menu[type=toolbar]"),
+        monthlyList: document.getElementById("monthly-list"),
+        currencySuggestDialog: document.getElementById("currency-suggest-dialog")
+    },
+
     initialize: function () {
+        this.bindViews();
         store.each(this.aggregateStoreValues, this.displayStoreValues.bind(this));
+    },
+
+    bindViews: function() {
+        ko.applyBindings(toolbar, this.views.toolbar);
+        ko.applyBindings(monthlyExpenses, this.views.monthlyList);
+        ko.applyBindings(currencySuggestion, this.views.currencySuggestDialog);
     },
 
     aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
@@ -20,7 +33,7 @@ var app = {
     },
 
     displayStoreValues: function (aggregatedStoreValues) {
-        ko.applyBindings(
+        monthlyExpenses.setExpenses(
             this.translateStoreValuesToDailyExpenses(aggregatedStoreValues)
         );
     },
@@ -39,7 +52,7 @@ var app = {
             monthlyExpenses.push(new DailyExpenses(monthIndex, dailyExpenses));
         }
 
-        return new MonthlyExpenses(monthlyExpenses);
+        return monthlyExpenses;
     }
 
 };

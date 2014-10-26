@@ -14,10 +14,6 @@ function DailyExpenses(month, dailyExpenses) {
         return sum;
     });
 
-    this.formattedMonthlySum = ko.computed(function () {
-        return "RSD " + self.monthlySum().toFixed(2);
-    });
-
     this.month = month;
 
     this.updateDailyExpensesList = function (date, amount) {

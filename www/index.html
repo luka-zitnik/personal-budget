@@ -24,7 +24,7 @@
             article[aria-hidden=true] {
                 top: 100%;
             }
-            form {
+            article form {
                 margin: 1rem 2rem;
             }
         </style>
@@ -32,13 +32,17 @@
         <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/lists.css" />
         <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/input_areas.css" />
         <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/buttons.css" />
-        <script src="lib/knockout-3.2.0.js" defer></script>
-        <script src="scripts/DailySum.js" defer></script>
-        <script src="scripts/DailyExpenses.js" defer></script>
-        <script src="scripts/MonthlyExpenses.js" defer></script>
+        <link rel="stylesheet" href="lib/Gaia-UI-Building-Blocks-master/style/confirm.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
+        <script src="lib/knockout-3.2.0.js" defer></script>
+        <script src="scripts/viewmodels/toolbar.js" defer></script>
+        <script src="scripts/viewmodels/addExpense.js" defer></script>
+        <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
+        <script src="scripts/viewmodels/DailySum.js" defer></script>
+        <script src="scripts/viewmodels/DailyExpenses.js" defer></script>
+        <script src="scripts/viewmodels/monthlyExpenses.js" defer></script>
         <script src="scripts/app.js" defer></script>
     </head>
     <body role="application">
@@ -52,17 +56,21 @@
                 <h1>Daily Expenses</h1>
             </header>
         </section>
-        <section data-type="list" data-bind="foreach: monthlyExpensesList">
+        <section data-type="list" data-bind="foreach: monthlyExpensesList" id="monthly-list">
             <header>
                 <aside class="pack-end">
-                    <span data-bind="text: formattedMonthlySum"></span>
+                    <span data-bind="text: $root.currencyCode"></span>
+                    <span data-bind="text: monthlySum().toFixed(2)"></span>
                 </aside>
                 <span data-bind="text: month"></span>
             </header>
             <ul data-bind="foreach: dailyExpensesList">
                 <li>
                     <aside class="pack-end">
-                        <p data-bind="text: formattedDailySum"></p>
+                        <p>
+                            <span data-bind="text: $root.currencyCode"></span>
+                            <span data-bind="text: dailySum().toFixed(2)"></span>
+                        </p>
                     </aside>
                     <p data-bind="text: date"></p>
                 </li>
@@ -97,5 +105,20 @@
                 </form>
             </section>
         </article>
+        <form data-type="confirm" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
+            <section>
+                <p>
+                    Do you want to use "<span data-bind="text: suggestedCurrency"></span>"
+                    as your currency for this app?
+                </p>
+            </section>
+            <menu>
+                <ul style="border-top: none">
+                    <li><button type="button" data-bind="click: useSuggested"class="full recommend">Yes</button></li>
+                    <li><button type="button" data-bind="click: chooseAnother" class="full">Let me choose a different currency</button></li>
+                    <li><button type="button" data-bind="click: close" class="full">Not now</button></li>
+                </ul>
+            </menu>
+        </form>
     </body>
 </html>
