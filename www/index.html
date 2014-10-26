@@ -25,7 +25,12 @@
                 top: 100%;
             }
             article form {
-                margin: 1rem 2rem;
+                margin: 1rem;
+            }
+            ul {
+                padding: 0px;
+                margin: 0px;
+                list-style: outside none none;
             }
         </style>
         <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/headers.css" />
@@ -38,6 +43,7 @@
         <script src="scripts/currency.js" defer></script>
         <script src="library/knockout-3.2.0.js" defer></script>
         <script src="scripts/viewmodels/toolbar.js" defer></script>
+        <script src="scripts/viewmodels/options.js" defer></script>
         <script src="scripts/viewmodels/addExpense.js" defer></script>
         <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
         <script src="scripts/viewmodels/DailySum.js" defer></script>
@@ -51,6 +57,9 @@
                 <menu type="toolbar">
                     <a data-bind="click: openAddExpenseView">
                         <span class="icon icon-add">Add</span>
+                    </a>
+                    <a data-bind="click: openOptionsView">
+                        <span class="icon icon-options">Options</span>
                     </a>
                 </menu>
                 <h1>Daily Expenses</h1>
@@ -80,7 +89,7 @@
             <section role="region">
                 <header>
                     <button data-bind="click: close">
-                        <span class="icon icon-back">Exit</span>
+                        <span class="icon icon-back">Back</span>
                     </button>
                     <h1>Add Expense</h1>
                 </header>
@@ -88,21 +97,39 @@
             <section>
                 <form data-bind="submit: addExpense">
                     <p>
-                        <input data-bind="value: label" name="label" type="text" required="" placeholder="How do you name this expense?">
+                        <input data-bind="value: label" name="label" type="text" required="" placeholder="Label">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input data-bind="value: amount" name="amount" type="number" step="0.01" required="" placeholder="How much did you spend?">
+                        <input data-bind="value: amount" name="amount" type="number" step="0.01" required="" placeholder="Amount">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input data-bind="value: date" name="date" type="text" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="What was the date?">
+                        <input data-bind="value: date" name="date" type="text" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date">
                         <button type="reset"></button>
                     </p>
                     <p>
                         <button>Add</button>
                     </p>
                 </form>
+            </section>
+        </article>
+        <article aria-hidden="true" id="options-view">
+            <section role="region">
+                <header>
+                    <button data-bind="click: close">
+                        <span class="icon icon-back">Back</span>
+                    </button>
+                    <h1>Options</h1>
+                </header>
+            </section>
+            <section role="region">
+                <ul class="compact">
+                    <li>
+                        <label>Currency</label>
+                        <button type="button" class="icon icon-dialog" data-bind="text: currencyCode"></button>
+                    </li>
+                </ul>
             </section>
         </article>
         <form data-type="confirm" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">

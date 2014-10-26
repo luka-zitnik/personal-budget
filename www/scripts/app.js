@@ -4,7 +4,8 @@ var app = {
         toolbar: document.querySelector("menu[type=toolbar]"),
         monthlyList: document.getElementById("monthly-list"),
         currencySuggestDialog: document.getElementById("currency-suggest-dialog"),
-        addExpense: document.getElementById("add-expense-view")
+        addExpense: document.getElementById("add-expense-view"),
+        options: document.getElementById("options-view")
     },
 
     initialize: function () {
@@ -17,6 +18,7 @@ var app = {
         ko.applyBindings(monthlyExpenses, this.views.monthlyList);
         ko.applyBindings(currencySuggestion, this.views.currencySuggestDialog);
         ko.applyBindings(addExpense, this.views.addExpense);
+        ko.applyBindings(options, this.views.options);
     },
 
     aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
