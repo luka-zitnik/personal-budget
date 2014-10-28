@@ -24,9 +24,9 @@ var app = {
     },
 
     aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
-        var month = storeValue.date.substring(0, 7),
-            date = storeValue.date,
-            amount = storeValue.amount;
+        var date = storeValue.date,
+            amount = storeValue.amount,
+            month = date.substring(0, 7);
 
         aggregatedStoreValues[month] || (aggregatedStoreValues[month] = {});
 

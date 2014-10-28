@@ -14,20 +14,29 @@ var addExpense = {
     },
 
     addExpense: function () {
-        var month = this.date().substring(0, 7),
+        var date = this.date(),
+            label = this.label(),
+            month = date.substring(0, 7),
             amount = parseFloat(this.amount());
 
         monthlyExpenses.updateMonthlyExpensesList(
             month,
-            this.date(),
+            date,
             amount
         );
+        this.resetForm();
         this.close();
         this.persistIntoDB(
-            this.date(),
-            this.label(),
+            date,
+            label,
             amount
         );
+    },
+
+    resetForm: function() {
+        this.label(null);
+        this.amount(null);
+        this.date(null);
     },
 
     persistIntoDB: function (date, label, amount) {
