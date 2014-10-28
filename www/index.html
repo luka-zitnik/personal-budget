@@ -28,20 +28,26 @@
                 margin: 1rem;
             }
             ul {
-                padding: 0px;
-                margin: 0px;
+                padding: 0;
+                margin: 1rem;
                 list-style: outside none none;
             }
             form[role=dialog] {
                 z-index: 101 !important;
             }
+            input[type="date"] {
+                box-shadow: none;
+            }
+            form[role="dialog"][data-type="action"] section {
+                overflow: auto;
+            }
         </style>
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/headers.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/lists.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/input_areas.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/buttons.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/action_menu.css" />
-        <link rel="stylesheet" href="library/Gaia-UI-Building-Blocks-master/style/value_selector.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/headers.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/lists.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/input_areas.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/buttons.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/action_menu.css" />
+        <link rel="stylesheet" href="library/bb-19e6df7/value_selector.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
@@ -94,25 +100,24 @@
         <article aria-hidden="true" id="add-expense-view">
             <section role="region">
                 <header>
-                    <button data-bind="click: close">
+                    <a data-bind="click: close">
                         <span class="icon icon-back">Back</span>
-                    </button>
+                    </a>
                     <h1>Add Expense</h1>
                 </header>
             </section>
             <section>
                 <form data-bind="submit: addExpense">
                     <p>
-                        <input data-bind="value: label" name="label" type="text" required="" placeholder="Label">
+                        <input data-bind="value: label" type="text" required="" placeholder="Label">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input data-bind="value: amount" name="amount" type="number" step="0.01" required="" placeholder="Amount">
+                        <input data-bind="value: amount" type="number" step="0.01" required="" placeholder="0.00">
                         <button type="reset"></button>
                     </p>
                     <p>
-                        <input data-bind="value: date" name="date" type="text" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="Date">
-                        <button type="reset"></button>
+                        <input data-bind="value: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                     </p>
                     <p>
                         <button>Add</button>
@@ -129,16 +134,18 @@
                     <h1>Options</h1>
                 </header>
             </section>
-            <section role="region">
-                <ul class="compact">
+            <section>
+                <ul>
                     <li>
-                        <label>Currency</label>
                         <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
                     </li>
                 </ul>
             </section>
         </article>
         <form data-type="action" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
+            <header>
+                <h1>Set Currency</h1>
+            </header>
             <section>
                 <p>
                     Do you want to use "<span data-bind="text: suggestedCurrency"></span>"
@@ -151,20 +158,23 @@
                 <button type="button" data-bind="click: close" class="full">Not now</button>
             </menu>
         </form>
-        <form data-type="value-selector" role="dialog" id="currency-select-dialog" data-bind="visible: visible">
-            <section class="scrollable">
-                <h1>Select Currency</h1>
-                <ol role="listbox" data-bind="foreach: currenciesList">
-                    <li role="option" data-bind="attr: { 'aria-selected': $data === $parent.selected() }">
-                        <label role="presentation" data-bind="click: $parent.select.bind($parent, $data)">
-                            <span data-bind="text: $data"></span>
-                        </label>
-                    </li>
-                </ol>
-                <menu>
-                    <button class="affirmative full" data-bind="click: ok">OK</button>
+        <div class="value-selector"><!-- value-selector class smells like it will be discarded soon -->
+            <form data-type="value-selector" role="dialog" id="currency-select-dialog" data-bind="visible: visible">
+                <section class="scrollable">
+                    <h1>Select Currency</h1>
+                    <ol role="listbox" data-bind="foreach: currenciesList">
+                        <li role="option" data-bind="attr: { 'aria-selected': $data === $parent.selected() }">
+                            <label role="presentation" data-bind="click: $parent.select.bind($parent, $data)">
+                                <span data-bind="text: $data"></span>
+                            </label>
+                        </li>
+                    </ol>
+                </section>
+                <menu class="value-selector-buttons">
+                    <button class="affirmative" data-bind="click: ok">OK</button>
+                    <button data-bind="click: close">Cancel</button>
                 </menu>
-            </section>
-        </form>
+            </form>
+        </div>
     </body>
 </html>

@@ -283,6 +283,10 @@ var currency = {
     },
 
     setChosenCurrencyCode: function(currencyCode) {
+        if (currencyCode === null) {
+            return;
+        }
+
         localStorage.setItem(this.storageKey, currencyCode);
         dispatchEvent(new CustomEvent("currencyCodeChanged", {
             detail: { newCurrencyCode: currencyCode }

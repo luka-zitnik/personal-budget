@@ -1,13 +1,17 @@
 var options = {
 
     containerNode: document.getElementById("options-view"),
-    currencyCode: ko.observable(currency.getChosenCurrencyCode() || "None"),
+    currencyCode: ko.observable(currency.getChosenCurrencyCode() || "Currency not selected"),
 
     initialize: function() {
         var self = this;
 
         addEventListener("currencyCodeChanged", function(event) {
-            self.currencyCode(event.detail.newCurrencyCode);
+            var newCurrencyCode = event.detail.newCurrencyCode;
+
+            if (newCurrencyCode !== null) {
+                self.currencyCode(event.detail.newCurrencyCode);
+            }
         });
     },
 
