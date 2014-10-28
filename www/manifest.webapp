@@ -12,5 +12,10 @@
     "icons": {
         "60": "/images/icon-60.png",
         "128": "/images/icon-128.png"
+    },
+    "permissions": {
+        "geolocation": {
+            "description": "Required to suggest local currency"
+        }
     }
 }
