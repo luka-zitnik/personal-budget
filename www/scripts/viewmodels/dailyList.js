@@ -3,6 +3,7 @@ var dailyList = {
     date: ko.observable(),
     expensesList: ko.observableArray(),
     containerNode: document.getElementById("daily-list-view"),
+    state: ko.observable("list"), // "list" or "edit"
 
     open: function(date) {
         this.date(date);
@@ -21,6 +22,7 @@ var dailyList = {
     close: function() {
         this.containerNode.setAttribute("aria-hidden", "true");
         this.expensesList().length = 0;
+        this.state("list");
     }
 
 };

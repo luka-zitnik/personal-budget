@@ -24,7 +24,7 @@
             article[aria-hidden=true] {
                 top: 100%;
             }
-            article form {
+            article form[data-type="add"] {
                 margin: 1rem;
             }
             ul {
@@ -50,12 +50,14 @@
                 box-sizing: border-box;
             }
         </style>
-        <link rel="stylesheet" href="library/bb-69a6e9c/headers.css" />
-        <link rel="stylesheet" href="library/bb-69a6e9c/lists.css" />
-        <link rel="stylesheet" href="library/bb-69a6e9c/input_areas.css" />
-        <link rel="stylesheet" href="library/bb-69a6e9c/buttons.css" />
-        <link rel="stylesheet" href="library/bb-69a6e9c/action_menu.css" />
-        <link rel="stylesheet" href="library/bb-69a6e9c/value_selector.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/input_areas.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/buttons.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/action_menu.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/value_selector.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/edit_mode.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/switches.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
@@ -119,7 +121,7 @@
                 </header>
             </section>
             <section>
-                <form data-bind="submit: addExpense">
+                <form data-type="add" data-bind="submit: addExpense">
                     <p>
                         <input data-bind="value: label" type="text" required="" placeholder="Label">
                         <button type="reset"></button>
@@ -160,12 +162,21 @@
                     <a data-bind="click: close">
                         <span class="icon icon-back">Back</span>
                     </a>
+                    <menu type="toolbar">
+                        <a data-bind="click: state('edit')">
+                            <span class="icon icon-edit">Edit</span>
+                        </a>
+                    </menu>
                     <h1 data-bind="text: date"></h1>
                 </header>
             </section>
             <section data-type="list">
-                <ul data-bind="foreach: expensesList">
+                <ul data-bind="foreach: expensesList, attr: {'data-type': state}">
                     <li>
+                        <label class="pack-checkbox danger">
+                            <input type="checkbox"/>
+                            <span></span>
+                        </label>
                         <aside class="pack-end">
                             <p>
                                 <span data-bind="text: monthlyExpenses.currencyCode"></span>
@@ -176,6 +187,23 @@
                     </li>
                 </ul>
             </section>
+            <form data-type="edit" role="dialog" data-bind="visible: state() === 'edit'">
+                <section role="region">
+                    <header>
+                        <a data-bind="click: state('list')">
+                            <span class="icon icon-close">Close</span>
+                        </a>
+                        <menu type="toolbar">
+                            <a>Delete</a>
+                        </menu>
+                        <h1>Delete</h1>
+                    </header>
+                </section>
+                <menu>
+                    <button type="button">Deselect all</button>
+                    <button type="button">Select all</button>
+                </menu>
+            </form>
         </article>
         <form data-type="action" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
             <header>
