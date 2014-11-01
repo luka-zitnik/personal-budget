@@ -6,12 +6,13 @@ var app = {
         currencySuggestDialog: document.getElementById("currency-suggest-dialog"),
         currencySelectDialog: document.getElementById("currency-select-dialog"),
         addExpense: document.getElementById("add-expense-view"),
-        options: document.getElementById("options-view")
+        options: document.getElementById("options-view"),
+        dailyList: document.getElementById("daily-list-view")
     },
 
     initialize: function () {
         this.bindViews();
-        store.each(this.aggregateStoreValues, this.displayStoreValues.bind(this));
+        monthlyExpenses.list();
     },
 
     bindViews: function() {
@@ -21,44 +22,7 @@ var app = {
         ko.applyBindings(currencySelector, this.views.currencySelectDialog),
         ko.applyBindings(addExpense, this.views.addExpense);
         ko.applyBindings(options, this.views.options);
-    },
-
-    aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
-        var date = storeValue.date,
-            amount = storeValue.amount,
-            month = date.substring(0, 7);
-
-        aggregatedStoreValues[month] || (aggregatedStoreValues[month] = {});
-
-        if (aggregatedStoreValues[month][date]) {
-            aggregatedStoreValues[month][date] += amount;
-        }
-        else {
-            aggregatedStoreValues[month][date] = amount;
-        }
-    },
-
-    displayStoreValues: function (aggregatedStoreValues) {
-        monthlyExpenses.setExpenses(
-            this.translateStoreValuesToDailyExpenses(aggregatedStoreValues)
-        );
-    },
-
-    translateStoreValuesToDailyExpenses: function (aggregatedStoreValues) {
-        var monthlyExpenses = [],
-            dailyExpenses = [],
-            monthIndex,
-            dateIndex;
-
-        for (monthIndex in aggregatedStoreValues) {
-            dailyExpenses = [];
-            for (dateIndex in aggregatedStoreValues[monthIndex]) {
-                dailyExpenses.push(new DailySum(dateIndex, aggregatedStoreValues[monthIndex][dateIndex]));
-            }
-            monthlyExpenses.push(new DailyExpenses(monthIndex, dailyExpenses));
-        }
-
-        return monthlyExpenses;
+        ko.applyBindings(dailyList, this.views.dailyList);
     }
 
 };

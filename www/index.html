@@ -69,6 +69,8 @@
         <script src="scripts/viewmodels/DailySum.js" defer></script>
         <script src="scripts/viewmodels/DailyExpenses.js" defer></script>
         <script src="scripts/viewmodels/monthlyExpenses.js" defer></script>
+        <script src="scripts/viewmodels/Expense.js" defer></script>
+        <script src="scripts/viewmodels/dailyList.js" defer></script>
         <script src="scripts/app.js" defer></script>
     </head>
     <body role="application">
@@ -95,13 +97,15 @@
             </header>
             <ul data-bind="foreach: dailyExpensesList">
                 <li>
-                    <aside class="pack-end">
-                        <p>
-                            <span data-bind="text: $root.currencyCode"></span>
-                            <span data-bind="text: dailySum().toFixed(2)"></span>
-                        </p>
-                    </aside>
-                    <p data-bind="text: date"></p>
+                    <a data-bind="click: openDailyList">
+                        <aside class="pack-end">
+                            <p>
+                                <span data-bind="text: $root.currencyCode"></span>
+                                <span data-bind="text: dailySum().toFixed(2)"></span>
+                            </p>
+                        </aside>
+                        <p data-bind="text: date"></p>
+                    </a>
                 </li>
             </ul>
         </section>
@@ -136,9 +140,9 @@
         <article aria-hidden="true" id="options-view">
             <section role="region">
                 <header>
-                    <button data-bind="click: close">
+                    <a data-bind="click: close">
                         <span class="icon icon-back">Back</span>
-                    </button>
+                    </a>
                     <h1>Options</h1>
                 </header>
             </section>
@@ -146,6 +150,29 @@
                 <ul>
                     <li>
                         <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                    </li>
+                </ul>
+            </section>
+        </article>
+        <article aria-hidden="true" id="daily-list-view">
+            <section role="region">
+                <header>
+                    <a data-bind="click: close">
+                        <span class="icon icon-back">Back</span>
+                    </a>
+                    <h1 data-bind="text: date"></h1>
+                </header>
+            </section>
+            <section data-type="list">
+                <ul data-bind="foreach: expensesList">
+                    <li>
+                        <aside class="pack-end">
+                            <p>
+                                <span data-bind="text: monthlyExpenses.currencyCode"></span>
+                                <span data-bind="text: amount().toFixed(2)"></span>
+                            </p>
+                        </aside>
+                        <p data-bind="text: label"></p>
                     </li>
                 </ul>
             </section>

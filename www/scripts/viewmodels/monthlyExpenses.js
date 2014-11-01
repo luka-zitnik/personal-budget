@@ -11,8 +11,50 @@ var monthlyExpenses = {
         });
     },
 
+    list: function() {
+        store.each(this.aggregateStoreValues, this.displayStoreValues.bind(this));
+    },
+
+    displayStoreValues: function (aggregatedStoreValues) {
+        this.setExpenses(
+            this.translateStoreValuesToDailyExpenses(aggregatedStoreValues)
+        );
+    },
+
+    aggregateStoreValues: function (aggregatedStoreValues, storeValue) {
+        var date = storeValue.date,
+            amount = storeValue.amount,
+            month = date.substring(0, 7);
+
+        aggregatedStoreValues[month] || (aggregatedStoreValues[month] = {});
+
+        if (aggregatedStoreValues[month][date]) {
+            aggregatedStoreValues[month][date] += amount;
+        }
+        else {
+            aggregatedStoreValues[month][date] = amount;
+        }
+    },
+
     setExpenses: function(monthlyExpenses) {
         this.monthlyExpensesList(monthlyExpenses);
+    },
+
+    translateStoreValuesToDailyExpenses: function (aggregatedStoreValues) {
+        var monthlyExpenses = [],
+            dailyExpenses = [],
+            monthIndex,
+            dateIndex;
+
+        for (monthIndex in aggregatedStoreValues) {
+            dailyExpenses = [];
+            for (dateIndex in aggregatedStoreValues[monthIndex]) {
+                dailyExpenses.push(new DailySum(dateIndex, aggregatedStoreValues[monthIndex][dateIndex]));
+            }
+            monthlyExpenses.push(new DailyExpenses(monthIndex, dailyExpenses));
+        }
+
+        return monthlyExpenses;
     },
 
     updateMonthlyExpensesList: function (month, date, amount) {

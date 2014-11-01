@@ -34,8 +34,10 @@ var store = {
                     cursor.continue();
                 }
                 else {
+                    if (doneCallback === undefined) {
+                        return;
+                    }
 
-                    // No more entries
                     doneCallback(aggregatedStoreValues);
                 }
             };
