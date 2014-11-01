@@ -4,13 +4,21 @@ var store = {
     dbVersion: 1,
     storeName: "daily_expenses",
 
+    checkSupport: function() {
+        if (!window.indexedDB) {
+            window.alert("Your browser doesn't support a stable version of IndexedDB.");
+            return false;
+        }
+
+        return true;
+    },
+
     each: function (aggregatorCallback, doneCallback) {
 
         var self = this,
             openDBRequest;
 
-        if (!window.indexedDB) {
-            window.alert("Your browser doesn't support a stable version of IndexedDB.");
+        if (this.checkSupport() === false) {
             return;
         }
 
@@ -45,9 +53,44 @@ var store = {
 
     },
 
+    ieach: function(range, aggregatorCallback, doneCallback) {
+        var self = this,
+            openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
+
+        openDBRequest.onerror = this.dbErrorHandler;
+
+        openDBRequest.onsuccess = function(event) {
+            var db = event.target.result,
+                transaction = db.transaction(self.storeName),
+                objectStore = transaction.objectStore(self.storeName),
+                index = objectStore.index("date"), // There's only one index for now
+                aggregatedStoreValues = {};
+
+            index.openCursor(range).onsuccess = function(event) {
+                var cursor = event.target.result;
+
+                if (cursor) {
+                    aggregatorCallback(aggregatedStoreValues, cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    if (doneCallback === undefined) {
+                        return;
+                    }
+
+                    doneCallback(aggregatedStoreValues);
+                }
+            };
+        };
+    },
+
     insert: function (storeValue) {
         var self = this,
             openDBRequest;
+
+        if (this.checkSupport() === false) {
+            return;
+        }
 
         openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
 
