@@ -11,11 +11,12 @@ var dailyList = {
         store.ieach(IDBKeyRange.only(date), this.each.bind(this));
     },
 
-    each: function(previous, current) {
+    each: function(previous, current, key) {
         this.expensesList.push(new Expense(
             current.date,
             current.amount,
-            current.label
+            current.label,
+            key
         ));
     },
 
@@ -25,11 +26,17 @@ var dailyList = {
     },
 
     deleteExpenses: function() {
-        for (var i = 0; i < this.expensesList().length; ++i) {
+        var i = this.expensesList().length;
+
+        while (i--) {
             if (this.expensesList()[i].markedForDeletion() === true) {
-                this.expensesList()[i].deleteExpense();
+                store.delete(this.expensesList()[i].key);
+                this.expensesList.splice(i, 1);
             }
         }
+
+        this.state("list");
+        monthlyExpenses.list();
     }
 
 };

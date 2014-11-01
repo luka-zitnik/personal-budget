@@ -38,7 +38,7 @@ var store = {
                 var cursor = event.target.result;
 
                 if (cursor) {
-                    aggregatorCallback(aggregatedStoreValues, cursor.value);
+                    aggregatorCallback(aggregatedStoreValues, cursor.value, cursor.primaryKey);
                     cursor.continue();
                 }
                 else {
@@ -70,7 +70,7 @@ var store = {
                 var cursor = event.target.result;
 
                 if (cursor) {
-                    aggregatorCallback(aggregatedStoreValues, cursor.value);
+                    aggregatorCallback(aggregatedStoreValues, cursor.value, cursor.primaryKey);
                     cursor.continue();
                 }
                 else {
@@ -81,6 +81,21 @@ var store = {
                     doneCallback(aggregatedStoreValues);
                 }
             };
+        };
+    },
+
+    delete: function(storeKey) {
+        var self = this,
+            openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
+
+        openDBRequest.onerror = this.dbErrorHandler;
+
+        openDBRequest.onsuccess = function(event) {
+            var db = event.target.result,
+                transaction = db.transaction(self.storeName, "readwrite"),
+                objectStore = transaction.objectStore(self.storeName);
+
+            objectStore.delete(storeKey);
         };
     },
 
