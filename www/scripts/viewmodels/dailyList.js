@@ -22,7 +22,14 @@ var dailyList = {
     close: function() {
         this.containerNode.setAttribute("aria-hidden", "true");
         this.expensesList().length = 0;
-        this.state("list");
+    },
+
+    deleteExpenses: function() {
+        for (var i = 0; i < this.expensesList().length; ++i) {
+            if (this.expensesList()[i].markedForDeletion() === true) {
+                this.expensesList()[i].deleteExpense();
+            }
+        }
     }
 
 };

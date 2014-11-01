@@ -163,7 +163,7 @@
                         <span class="icon icon-back">Back</span>
                     </a>
                     <menu type="toolbar">
-                        <a data-bind="click: state('edit')">
+                        <a data-bind="click: function(){state('edit');}">
                             <span class="icon icon-edit">Edit</span>
                         </a>
                     </menu>
@@ -174,7 +174,7 @@
                 <ul data-bind="foreach: expensesList, attr: {'data-type': state}">
                     <li>
                         <label class="pack-checkbox danger">
-                            <input type="checkbox"/>
+                            <input type="checkbox" data-bind="checked: markedForDeletion"/>
                             <span></span>
                         </label>
                         <aside class="pack-end">
@@ -190,19 +190,15 @@
             <form data-type="edit" role="dialog" data-bind="visible: state() === 'edit'">
                 <section role="region">
                     <header>
-                        <a data-bind="click: state('list')">
+                        <a data-bind="click: function(){state('list');}">
                             <span class="icon icon-close">Close</span>
                         </a>
                         <menu type="toolbar">
-                            <a>Delete</a>
+                            <a data-bind="click: deleteExpenses">Delete</a>
                         </menu>
-                        <h1>Delete</h1>
+                        <h1 data-bind="text: date"></h1>
                     </header>
                 </section>
-                <menu>
-                    <button type="button">Deselect all</button>
-                    <button type="button">Select all</button>
-                </menu>
             </form>
         </article>
         <form data-type="action" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
