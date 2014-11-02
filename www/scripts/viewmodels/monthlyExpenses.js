@@ -41,17 +41,21 @@ var monthlyExpenses = {
     },
 
     translateStoreValuesToDailyExpenses: function (aggregatedStoreValues) {
-        var monthlyExpenses = [],
-            dailyExpenses = [],
-            monthIndex,
+        var areInDescLexOrd = function(x, y) {
+                return x <= y;
+            },
+            months = Object.keys(aggregatedStoreValues).sort(areInDescLexOrd),
+            days = [],
+            monthlyExpenses = [],
+            dailyExpenses,
             dateIndex;
 
-        for (monthIndex in aggregatedStoreValues) {
+        for (var i = 0; i < months.length; ++i) {
             dailyExpenses = [];
-            for (dateIndex in aggregatedStoreValues[monthIndex]) {
-                dailyExpenses.push(new DailySum(dateIndex, aggregatedStoreValues[monthIndex][dateIndex]));
+            for (dateIndex in aggregatedStoreValues[months[i]]) { // TODO Order this loop too
+                dailyExpenses.push(new DailySum(dateIndex, aggregatedStoreValues[months[i]][dateIndex]));
             }
-            monthlyExpenses.push(new DailyExpenses(monthIndex, dailyExpenses));
+            monthlyExpenses.push(new DailyExpenses(months[i], dailyExpenses));
         }
 
         return monthlyExpenses;
