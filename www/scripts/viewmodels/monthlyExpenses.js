@@ -45,15 +45,17 @@ var monthlyExpenses = {
                 return x <= y;
             },
             months = Object.keys(aggregatedStoreValues).sort(areInDescLexOrd),
-            days = [],
             monthlyExpenses = [],
+            days,
             dailyExpenses,
-            dateIndex;
+            i,
+            j;
 
-        for (var i = 0; i < months.length; ++i) {
+        for (i = 0; i < months.length; ++i) {
             dailyExpenses = [];
-            for (dateIndex in aggregatedStoreValues[months[i]]) { // TODO Order this loop too
-                dailyExpenses.push(new DailySum(dateIndex, aggregatedStoreValues[months[i]][dateIndex]));
+            days = Object.keys(aggregatedStoreValues[months[i]]).sort(areInDescLexOrd);
+            for (j = 0; j < days.length; ++j) {
+                dailyExpenses.push(new DailySum(days[j], aggregatedStoreValues[months[i]][days[j]]));
             }
             monthlyExpenses.push(new DailyExpenses(months[i], dailyExpenses));
         }
