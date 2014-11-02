@@ -69,6 +69,9 @@ var monthlyExpenses = {
         if ((dailyExpenses instanceof DailyExpenses) === false) {
             dailyExpenses = new DailyExpenses(month, []);
             this.monthlyExpensesList.push(dailyExpenses);
+            this.monthlyExpensesList.sort(function(x, y) {
+                return x.month <= y.month;
+            });
         }
 
         dailyExpenses.updateDailyExpensesList(date, amount);

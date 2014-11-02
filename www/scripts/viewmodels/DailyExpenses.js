@@ -22,6 +22,9 @@ function DailyExpenses(month, dailyExpenses) {
         if ((dailySum instanceof DailySum) === false) {
             dailySum = new DailySum(date, amount);
             this.dailyExpensesList.push(dailySum);
+            this.dailyExpensesList.sort(function(x, y) {
+                return x.date <= y.date;
+            });
         }
         else {
             dailySum.dailySum(dailySum.dailySum() + amount);
