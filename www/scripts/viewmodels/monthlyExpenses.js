@@ -2,12 +2,33 @@ var monthlyExpenses = {
 
     currencyCode: ko.observable(currency.getChosenCurrencyCode()),
     monthlyExpensesList: ko.observableArray(),
+    remaining: null,
 
     initialize: function() {
         var self = this;
 
         addEventListener("currencyCodeChanged", function(event) {
             self.currencyCode(event.detail.newCurrencyCode);
+        });
+
+        self.remaining = ko.computed(function() {
+            var budgetStartDate = localStorage.getItem("budgetStartDate"),
+                budgetAmount = localStorage.getItem("budgetAmount"),
+                i = 0,
+                sum = 0,
+                j;
+
+            for (; i < self.monthlyExpensesList().length; ++i) {
+                for (j = 0; j < self.monthlyExpensesList()[i].dailyExpensesList().length; ++j) {
+                    if (self.monthlyExpensesList()[i].dailyExpensesList()[j].date < budgetStartDate) {
+                        return budgetAmount - sum;
+                    }
+
+                    sum += self.monthlyExpensesList()[i].dailyExpensesList()[j].dailySum();
+                }
+            }
+
+            return budgetAmount - sum;
         });
     },
 

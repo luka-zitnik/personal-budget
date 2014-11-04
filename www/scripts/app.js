@@ -1,7 +1,6 @@
 var app = {
 
     views: {
-        toolbar: document.querySelector("menu[type=toolbar]"),
         monthlyList: document.getElementById("monthly-list"),
         currencySuggestDialog: document.getElementById("currency-suggest-dialog"),
         currencySelectDialog: document.getElementById("currency-select-dialog"),
@@ -16,7 +15,6 @@ var app = {
     },
 
     bindViews: function() {
-        ko.applyBindings(toolbar, this.views.toolbar);
         ko.applyBindings(monthlyExpenses, this.views.monthlyList);
         ko.applyBindings(currencySuggestion, this.views.currencySuggestDialog);
         ko.applyBindings(currencySelector, this.views.currencySelectDialog),

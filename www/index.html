@@ -63,7 +63,6 @@
         <script src="scripts/currency.js" defer></script>
         <script src="library/underscore-1.7.0.js" defer></script>
         <script src="library/knockout-3.2.0.js" defer></script>
-        <script src="scripts/viewmodels/toolbar.js" defer></script>
         <script src="scripts/viewmodels/options.js" defer></script>
         <script src="scripts/viewmodels/addExpense.js" defer></script>
         <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
@@ -76,40 +75,47 @@
         <script src="scripts/app.js" defer></script>
     </head>
     <body role="application">
-        <section role="region">
+        <section role="region" id="monthly-list">
             <header>
                 <menu type="toolbar">
-                    <a data-bind="click: openAddExpenseView">
+                    <a data-bind="click: addExpense.open.bind(addExpense)">
                         <span class="icon icon-add">Add</span>
                     </a>
-                    <a data-bind="click: openOptionsView">
+                    <a data-bind="click: options.open.bind(options)">
                         <span class="icon icon-options">Options</span>
                     </a>
                 </menu>
                 <h1>Daily Expenses</h1>
             </header>
-        </section>
-        <section data-type="list" data-bind="foreach: monthlyExpensesList" id="monthly-list">
             <header>
-                <aside class="pack-end">
-                    <span data-bind="text: $root.currencyCode"></span>
-                    <span data-bind="text: monthlySum().toFixed(2)"></span>
-                </aside>
-                <span data-bind="text: month"></span>
+                <h2>
+                    Your budget total is
+                    <strong data-bind="text: currencyCode"></strong>
+                    <strong data-bind="text: remaining"></strong>.
+                </h2>
             </header>
-            <ul data-bind="foreach: dailyExpensesList">
-                <li>
-                    <a data-bind="click: openDailyList">
-                        <aside class="pack-end">
-                            <p>
-                                <span data-bind="text: $root.currencyCode"></span>
-                                <span data-bind="text: dailySum().toFixed(2)"></span>
-                            </p>
-                        </aside>
-                        <p data-bind="text: date"></p>
-                    </a>
-                </li>
-            </ul>
+            <section data-type="list" data-bind="foreach: monthlyExpensesList">
+                <header>
+                    <aside class="pack-end">
+                        <span data-bind="text: $root.currencyCode"></span>
+                        <span data-bind="text: monthlySum().toFixed(2)"></span>
+                    </aside>
+                    <span data-bind="text: month"></span>
+                </header>
+                <ul data-bind="foreach: dailyExpensesList">
+                    <li>
+                        <a data-bind="click: openDailyList">
+                            <aside class="pack-end">
+                                <p>
+                                    <span data-bind="text: $root.currencyCode"></span>
+                                    <span data-bind="text: dailySum().toFixed(2)"></span>
+                                </p>
+                            </aside>
+                            <p data-bind="text: date"></p>
+                        </a>
+                    </li>
+                </ul>
+            </section>
         </section>
         <article aria-hidden="true" id="add-expense-view">
             <section role="region">
@@ -152,6 +158,12 @@
                 <ul>
                     <li>
                         <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                    </li>
+                    <li>
+                        <input data-bind="value: budgetStartDate, event: {change: setBudgetStartDate}" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                    </li>
+                    <li>
+                        <input data-bind="value: budgetAmount, event: {change: setBudgetAmount}" type="number" step="0.01" required="" placeholder="0.00">
                     </li>
                 </ul>
             </section>

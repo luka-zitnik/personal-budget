@@ -7,7 +7,7 @@ function DailyExpenses(month, dailyExpenses) {
         var i = 0,
             sum = 0;
 
-        for (var i = 0; i < self.dailyExpensesList().length; ++i) {
+        for (; i < self.dailyExpensesList().length; ++i) {
             sum += self.dailyExpensesList()[i].dailySum();
         }
 
