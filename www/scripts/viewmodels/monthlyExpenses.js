@@ -12,8 +12,8 @@ var monthlyExpenses = {
         });
 
         self.remaining = ko.computed(function() {
-            var budgetStartDate = localStorage.getItem("budgetStartDate"),
-                budgetAmount = localStorage.getItem("budgetAmount"),
+            var budgetStartDate = options.budgetStartDate(),
+                budgetAmount = options.budgetAmount(),
                 i = 0,
                 sum = 0,
                 j;

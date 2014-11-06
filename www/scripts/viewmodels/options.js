@@ -2,8 +2,8 @@ var options = {
 
     containerNode: document.getElementById("options-view"),
     currencyCode: ko.observable(currency.getChosenCurrencyCode() || "Currency not selected"),
-    budgetStartDate: localStorage.getItem("budgetStartDate"),
-    budgetAmount: localStorage.getItem("budgetAmount"),
+    budgetStartDate: ko.observable(localStorage.getItem("budgetStartDate")),
+    budgetAmount: ko.observable(localStorage.getItem("budgetAmount")),
 
     initialize: function() {
         var self = this;
@@ -22,31 +22,28 @@ var options = {
     },
 
     close: function() {
+        var number = this.containerNode.querySelector("input[type=number]");
+        var date = this.containerNode.querySelector("input[type=date]");
+
+        if (number.checkValidity() === false) {
+            this.budgetAmount(localStorage.getItem("budgetAmount"));
+        }
+        else {
+            localStorage.setItem("budgetAmount", this.budgetAmount());
+        }
+
+        if (date.checkValidity() === false) {
+            this.budgetStartDate(localStorage.getItem("budgetStartDate"));
+        }
+        else {
+            localStorage.setItem("budgetStartDate", this.budgetStartDate());
+        }
+
         this.containerNode.setAttribute("aria-hidden", "true");
     },
 
     openCurrencySelector: function() {
         currencySelector.open();
-    },
-
-    setBudgetStartDate: function(self, event) {
-        if (event.target.checkValidity()) {
-            localStorage.setItem("budgetStartDate", event.target.value);
-            // TODO recalculate monthlyExpenses.remaining
-        }
-        else {
-            event.target.value = localStorage.getItem("budgetStartDate");
-        }
-    },
-
-    setBudgetAmount: function(self, event) {
-        if (event.target.checkValidity()) {
-            localStorage.setItem("budgetAmount", event.target.value);
-            // TODO recalculate monthlyExpenses.remaining
-        }
-        else {
-            event.target.value = localStorage.getItem("budgetAmount");
-        }
     }
 
 };
