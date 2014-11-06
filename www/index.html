@@ -49,6 +49,22 @@
                 -moz-box-sizing: border-box;
                 box-sizing: border-box;
             }
+            #no-expenses {
+                text-align: left;
+            }
+            #no-expenses .info {
+                border-top: 0.1rem solid rgba(96, 96, 96, 0.5);
+                color: #606060;
+                font-size: 2rem;
+                font-weight: lighter;
+                margin: 15rem 2rem 0px;
+            }
+            #no-expenses .info p {
+                margin: 1rem;
+            }
+            #no-expenses p.small {
+                font-size: 1.6rem;
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
@@ -116,6 +132,17 @@
                     </li>
                 </ul>
             </section>
+            <section data-bind="visible: monthlyExpensesList().length === 0">
+                <div id="no-expenses">
+                    <div class="info">
+                        <p>No expenses</p>
+                        <p class="small">
+                            You can start by recording today's expenses or
+                            limiting your expenses from this point onward.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </section>
         <article aria-hidden="true" id="add-expense-view">
             <section role="region">
@@ -153,19 +180,28 @@
                     </a>
                     <h1>Options</h1>
                 </header>
-            </section>
-            <section>
-                <ul>
-                    <li>
-                        <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
-                    </li>
-                    <li>
-                        <input data-bind="textInput: budgetStartDate" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
-                    </li>
-                    <li>
-                        <input data-bind="textInput: budgetAmount" type="number" step="0.01" required="" placeholder="0.00">
-                    </li>
-                </ul>
+                <section>
+                    <header>
+                        <h2>Currency</h2>
+                    </header>
+                    <ul>
+                        <li>
+                            <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                        </li>
+                        <li>
+                    </ul>
+                    <header>
+                        <h2>Budget</h2>
+                    </header>
+                    <ul>
+                        <li>
+                            <input data-bind="textInput: budgetStartDate" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                        </li>
+                        <li>
+                            <input data-bind="textInput: budgetAmount" type="number" step="0.01" required="" placeholder="0.00">
+                        </li>
+                    </ul>
+                </section>
             </section>
         </article>
         <article aria-hidden="true" id="daily-list-view">
