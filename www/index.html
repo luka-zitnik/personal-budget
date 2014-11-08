@@ -74,6 +74,7 @@
         <link rel="stylesheet" href="library/bb-69a6e9c/style/value_selector.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/edit_mode.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/switches.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/confirm.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
@@ -172,38 +173,54 @@
                 </form>
             </section>
         </article>
-        <article aria-hidden="true" id="options-view">
-            <section role="region">
-                <header>
-                    <a data-bind="click: close">
-                        <span class="icon icon-back">Back</span>
-                    </a>
-                    <h1>Options</h1>
-                </header>
-                <section>
+        <div id="options">
+            <article aria-hidden="true" id="options-view">
+                <section role="region">
                     <header>
-                        <h2>Currency</h2>
+                        <a data-bind="click: close">
+                            <span class="icon icon-back">Back</span>
+                        </a>
+                        <h1>Options</h1>
                     </header>
-                    <ul>
-                        <li>
-                            <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
-                        </li>
-                        <li>
-                    </ul>
-                    <header>
-                        <h2>Budget</h2>
-                    </header>
-                    <ul>
-                        <li>
-                            <input data-bind="textInput: budgetStartDate" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
-                        </li>
-                        <li>
-                            <input data-bind="textInput: budgetAmount" type="number" step="0.01" required="" placeholder="0.00">
-                        </li>
-                    </ul>
+                    <section>
+                        <header>
+                            <h2>Currency</h2>
+                        </header>
+                        <ul>
+                            <li>
+                                <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                            </li>
+                            <li>
+                        </ul>
+                        <header>
+                            <h2>Budget</h2>
+                        </header>
+                        <ul>
+                            <li>
+                                <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                            </li>
+                            <li>
+                                <input data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                            </li>
+                        </ul>
+                    </section>
                 </section>
-            </section>
-        </article>
+            </article>
+            <div data-bind="template: { name: 'options-invalid-template', data: invalidBudgetStartDateConfirm, if: invalidBudgetStartDateConfirm.visible }"></div>
+            <div data-bind="template: { name: 'options-invalid-template', data: invalidBudgetAmountConfirm, if: invalidBudgetAmountConfirm.visible }"></div>
+        </div>
+        <script type="text/html" id="options-invalid-template">
+            <form data-type="confirm" role="dialog" data-bind="submit: fix">
+                <section>
+                    <h1 data-bind="text: heading"></h1>
+                    <p data-bind="text: message"></p>
+                </section>
+                <menu>
+                    <button type="button" data-bind="click: reset">Whatever</button>
+                    <button class="recommend">Let me fix it</button>
+                </menu>
+            </form>
+        </script>
         <article aria-hidden="true" id="daily-list-view">
             <section role="region">
                 <header>

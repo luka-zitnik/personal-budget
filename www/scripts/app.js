@@ -5,7 +5,7 @@ var app = {
         currencySuggestDialog: document.getElementById("currency-suggest-dialog"),
         currencySelectDialog: document.getElementById("currency-select-dialog"),
         addExpense: document.getElementById("add-expense-view"),
-        options: document.getElementById("options-view"),
+        options: document.getElementById("options"),
         dailyList: document.getElementById("daily-list-view")
     },
 

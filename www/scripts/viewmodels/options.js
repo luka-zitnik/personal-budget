@@ -2,8 +2,44 @@ var options = {
 
     containerNode: document.getElementById("options-view"),
     currencyCode: ko.observable(currency.getChosenCurrencyCode() || "Currency not selected"),
-    budgetStartDate: ko.observable(localStorage.getItem("budgetStartDate")),
-    budgetAmount: ko.observable(localStorage.getItem("budgetAmount")),
+    budgetStartDate: ko.observable(localStorage.getItem("budgetStartDate") || ""),
+    budgetAmount: ko.observable(localStorage.getItem("budgetAmount") || ""),
+    invalidBudgetStartDateConfirm: {
+
+        heading: "Invalid date",
+        message: "Budget start date is not a valid date.",
+        visible: ko.observable(false),
+
+        fix: function() {
+            this.visible(false);
+        },
+
+        reset: function() {
+            options.reset("budgetAmount");
+            options.reset("budgetStartDate");
+            options.hide();
+            this.visible(false);
+        }
+
+    },
+    invalidBudgetAmountConfirm: {
+
+        heading: "Invalid number",
+        message: "Budget amount is not a valid number.",
+        visible: ko.observable(false),
+
+        fix: function() {
+            this.visible(false);
+        },
+
+        reset: function() {
+            options.reset("budgetAmount");
+            options.reset("budgetStartDate");
+            options.hide();
+            this.visible(false);
+        }
+
+    },
 
     initialize: function() {
         var self = this;
@@ -18,28 +54,43 @@ var options = {
     },
 
     open: function() {
-        this.containerNode.setAttribute("aria-hidden", "false");
+        this.show();
     },
 
     close: function() {
-        var number = this.containerNode.querySelector("input[type=number]");
-        var date = this.containerNode.querySelector("input[type=date]");
+        var amount = this.containerNode.querySelector("input[type=number]"),
+            date = this.containerNode.querySelector("input[type=date]");
 
-        if (number.checkValidity() === false) {
-            this.budgetAmount(localStorage.getItem("budgetAmount"));
-        }
-        else {
-            localStorage.setItem("budgetAmount", this.budgetAmount());
+        if (amount.checkValidity() === false) {
+            this.invalidBudgetAmountConfirm.visible(true);
+            return;
         }
 
         if (date.checkValidity() === false) {
-            this.budgetStartDate(localStorage.getItem("budgetStartDate"));
-        }
-        else {
-            localStorage.setItem("budgetStartDate", this.budgetStartDate());
+            this.invalidBudgetStartDateConfirm.visible(true);
+            return;
         }
 
+        this.persist("budgetAmount");
+        this.persist("budgetStartDate");
+
+        this.hide();
+    },
+
+    show: function() {
+        this.containerNode.setAttribute("aria-hidden", "false");
+    },
+
+    hide: function() {
         this.containerNode.setAttribute("aria-hidden", "true");
+    },
+
+    reset: function(prop) {
+        this[prop](localStorage.getItem(prop) || "");
+    },
+
+    persist: function(prop) {
+        localStorage.setItem(prop, this[prop]());
     },
 
     openCurrencySelector: function() {
