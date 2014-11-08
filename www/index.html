@@ -24,6 +24,14 @@
             article[aria-hidden=true] {
                 top: 100%;
             }
+            article label {
+                font-size: 1.8rem;
+                color: #333;
+                margin-left: 1.3rem;
+            }
+            article input, article button[type="button"] {
+                margin-top: 0.5rem;
+            }
             article form[data-type="add"] {
                 margin: 1rem;
             }
@@ -136,10 +144,10 @@
             <section data-bind="visible: welcomeIsVisible">
                 <div id="no-expenses">
                     <div class="info">
-                        <p>No expenses</p>
+                        <p>No expenses yet</p>
                         <p class="small">
                             You can start by recording today's expenses or
-                            limiting your expenses from this point onward.
+                            limiting future expenses.
                         </p>
                     </div>
                 </div>
@@ -157,15 +165,24 @@
             <section>
                 <form data-type="add" data-bind="submit: addExpense">
                     <p>
-                        <input data-bind="value: label" type="text" required="" placeholder="Label">
-                        <button type="reset"></button>
+                        <label for="add-expense-label">Label</label>
                     </p>
                     <p>
-                        <input data-bind="value: amount" type="number" step="0.01" required="" placeholder="0.00">
-                        <button type="reset"></button>
+                        <input id="add-expense-label" data-bind="value: label" type="text" required="" placeholder="What was it for?">
+                        <button type="reset" tabindex="-1"></button>
                     </p>
                     <p>
-                        <input data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                        <label for="add-expense-amount">Amount</label>
+                    </p>
+                    <p>
+                        <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" required="" placeholder="0.00">
+                        <button type="reset" tabindex="-1"></button>
+                    </p>
+                    <p>
+                        <label for="add-expense-date">Date</label>
+                    </p>
+                    <p>
+                        <input id="add-expense-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                     </p>
                     <p>
                         <button>Add</button>
@@ -183,24 +200,29 @@
                         <h1>Options</h1>
                     </header>
                     <section>
-                        <header>
-                            <h2>Currency</h2>
-                        </header>
                         <ul>
                             <li>
-                                <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                                <label>
+                                    Currency
+                                    <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
+                                </label>
                             </li>
-                            <li>
                         </ul>
                         <header>
                             <h2>Budget</h2>
                         </header>
                         <ul>
                             <li>
-                                <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                                <label>
+                                    Start Date
+                                    <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                                </label>
                             </li>
                             <li>
-                                <input data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                                <label>
+                                    Amount
+                                    <input data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                                </label>
                             </li>
                         </ul>
                     </section>
