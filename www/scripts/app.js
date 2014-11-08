@@ -11,7 +11,6 @@ var app = {
 
     initialize: function () {
         this.bindViews();
-        monthlyExpenses.list();
     },
 
     bindViews: function() {

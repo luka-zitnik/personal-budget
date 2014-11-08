@@ -1,8 +1,8 @@
 var monthlyExpenses = {
 
+    welcomeIsVisible: ko.observable(false),
     currencyCode: ko.observable(currency.getChosenCurrencyCode()),
     monthlyExpensesList: ko.observableArray(),
-    remaining: null,
 
     initialize: function() {
         var self = this;
@@ -11,25 +11,7 @@ var monthlyExpenses = {
             self.currencyCode(event.detail.newCurrencyCode);
         });
 
-        self.remaining = ko.computed(function() {
-            var budgetStartDate = options.budgetStartDate(),
-                budgetAmount = options.budgetAmount(),
-                i = 0,
-                sum = 0,
-                j;
-
-            for (; i < self.monthlyExpensesList().length; ++i) {
-                for (j = 0; j < self.monthlyExpensesList()[i].dailyExpensesList().length; ++j) {
-                    if (self.monthlyExpensesList()[i].dailyExpensesList()[j].date < budgetStartDate) {
-                        return budgetAmount - sum;
-                    }
-
-                    sum += self.monthlyExpensesList()[i].dailyExpensesList()[j].dailySum();
-                }
-            }
-
-            return budgetAmount - sum;
-        });
+        self.list();
     },
 
     list: function() {
@@ -59,6 +41,7 @@ var monthlyExpenses = {
 
     setExpenses: function(monthlyExpenses) {
         this.monthlyExpensesList(monthlyExpenses);
+        this.welcomeIsVisible(monthlyExpenses.length === 0);
     },
 
     translateStoreValuesToDailyExpenses: function (aggregatedStoreValues) {
@@ -96,6 +79,8 @@ var monthlyExpenses = {
         }
 
         dailyExpenses.updateDailyExpensesList(date, amount);
+
+        this.welcomeIsVisible(this.monthlyExpensesList().length === 0);
     },
 
     findDailyExpenses: function (month) {
@@ -112,5 +97,25 @@ var monthlyExpenses = {
     }
 
 };
+
+monthlyExpenses.remaining = ko.computed(function() {
+    var budgetStartDate = options.budgetStartDate(),
+        budgetAmount = options.budgetAmount(),
+        i = 0,
+        sum = 0,
+        j;
+
+    for (; i < this.monthlyExpensesList().length; ++i) {
+        for (j = 0; j < this.monthlyExpensesList()[i].dailyExpensesList().length; ++j) {
+            if (this.monthlyExpensesList()[i].dailyExpensesList()[j].date < budgetStartDate) {
+                return budgetAmount - sum;
+            }
+
+            sum += this.monthlyExpensesList()[i].dailyExpensesList()[j].dailySum();
+        }
+    }
+
+    return budgetAmount - sum;
+}.bind(monthlyExpenses));
 
 monthlyExpenses.initialize();
