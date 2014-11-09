@@ -10,7 +10,20 @@ var app = {
     },
 
     initialize: function () {
+        this.defineResetHandler();
         this.bindViews();
+    },
+
+    defineResetHandler: function() {
+        var touchstart = "ontouchstart" in window ? "touchstart" : "mousedown";
+        
+        ko.bindingHandlers.reset = {
+            init: function(element) {
+                element.addEventListener(touchstart, function(event) {
+                    event.target.previousElementSibling.value = "";
+                });
+            }
+        };
     },
 
     bindViews: function() {
