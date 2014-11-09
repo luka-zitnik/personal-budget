@@ -29,10 +29,7 @@
                 color: #333;
                 margin-left: 1.3rem;
             }
-            article input, article button[type="button"] {
-                margin-top: 0.5rem;
-            }
-            article form[data-type="add"] {
+            form[data-type="add"], form[data-type="options"] {
                 margin: 1rem;
             }
             ul {
@@ -211,20 +208,21 @@
                         <header>
                             <h2>Budget</h2>
                         </header>
-                        <ul>
-                            <li>
+                        <form data-type="options">
+                            <p>
                                 <label>
                                     Start Date
                                     <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                                 </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Amount
-                                    <input data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
-                                </label>
-                            </li>
-                        </ul>
+                            </p>
+                            <p>
+                                <label for="options-budget-amount">Amount</label>
+                            </p>
+                            <p>
+                                <input id="options-budget-amount" data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                                <button type="reset" tabindex="-1" data-bind="reset: true"></button>
+                            </p>
+                        </form>
                     </section>
                 </section>
             </article>
