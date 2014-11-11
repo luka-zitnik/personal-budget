@@ -11,7 +11,8 @@
     "launch_path": "/index.html",
     "icons": {
         "60": "/images/icon-60.png",
-        "128": "/images/icon-128.png"
+        "128": "/images/icon-128.png",
+        "512": "/images/icon-512.png"
     },
     "permissions": {
         "geolocation": {
