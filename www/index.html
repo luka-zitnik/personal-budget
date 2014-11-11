@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            html, body {
+            html,
+            body {
                 margin: 0px;
                 padding: 0px;
                 font-size: 10px;
@@ -29,8 +30,23 @@
                 color: #333;
                 margin-left: 1.3rem;
             }
-            form[data-type="add"], form[data-type="options"] {
+            form[data-type="add"],
+            form[data-type="options"] {
                 margin: 1rem;
+            }
+            form[data-type="add"] p span.currency,
+            form[data-type="options"] p span.currency {
+                position: absolute;
+                height: 4rem;
+                font-size: 1.6rem;
+                line-height: 4rem;
+                font-family: sans-serif;
+                padding: 0px 1.5rem;
+                color: #555;
+            }
+            form[data-type="add"] p span.currency:not(:empty) + input[type="number"],
+            form[data-type="options"] p span.currency:not(:empty) + input[type="number"] {
+                padding-left: 6rem;
             }
             ul {
                 padding: 0;
@@ -172,7 +188,8 @@
                         <label for="add-expense-amount">Amount</label>
                     </p>
                     <p>
-                        <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" required="" placeholder="0.00">
+                        <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
+                        <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
                         <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                     </p>
                     <p>
@@ -219,7 +236,8 @@
                                 <label for="options-budget-amount">Amount</label>
                             </p>
                             <p>
-                                <input id="options-budget-amount" data-bind="textInput: budgetAmount" type="number" step="0.01" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                                <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
+                                <input id="options-budget-amount" data-bind="textInput: budgetAmount" type="number" step="0.01" min="0.00" pattern="\d*\.\d{0,2}" placeholder="0.00">
                                 <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                             </p>
                         </form>
