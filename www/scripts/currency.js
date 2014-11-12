@@ -24,7 +24,7 @@ var currency = {
     // United States Minor Outlying Islands which are not really countries
     isoCountryToCurrencyMap: {
         "AD": "EUR", // Andorra: Euro
-        "AE": "AED", // United Arab Emirates:  	United Arab Emirates dirham
+        "AE": "AED", // United Arab Emirates: United Arab Emirates dirham
         "AF": "AFN", // Afghanistan: Afghan afghani
         "AG": "XCD", // Antigua and Barbuda: East Caribbean dollar
         "AI": "XCD", // Anguilla: East Caribbean dollar

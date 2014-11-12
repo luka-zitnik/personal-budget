@@ -227,18 +227,18 @@
                         </header>
                         <form data-type="options">
                             <p>
-                                <label>
-                                    Start Date
-                                    <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
-                                </label>
-                            </p>
-                            <p>
                                 <label for="options-budget-amount">Amount</label>
                             </p>
                             <p>
                                 <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
                                 <input id="options-budget-amount" data-bind="textInput: budgetAmount" type="number" step="0.01" min="0.00" pattern="\d*\.\d{0,2}" placeholder="0.00">
                                 <button type="reset" tabindex="-1" data-bind="reset: true"></button>
+                            </p>
+                            <p>
+                                <label>
+                                    Start Date
+                                    <input data-bind="textInput: budgetStartDate" type="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                                </label>
                             </p>
                         </form>
                     </section>
