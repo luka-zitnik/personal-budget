@@ -99,6 +99,15 @@
             [role="application"] > section[role="region"] > section {
                 height: calc(100% - 8.6rem);
             }
+            #yahoo-attribution {
+                float: right;
+                width: auto;
+                line-height: inherit;
+            }
+            #yahoo-attribution img {
+                height: 3rem;
+                vertical-align: middle;
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
@@ -319,6 +328,9 @@
         </article>
         <form data-type="action" role="dialog" id="currency-suggest-dialog" data-bind="visible: visible">
             <header>
+                <a id="yahoo-attribution" href="https://www.yahoo.com/?ilc=401" target="_blank">
+                    <img src="images/yahoo-attribution.png" alt="Powered by YAHOO!">
+                </a>
                 <h1>Set Currency</h1>
             </header>
             <section>
