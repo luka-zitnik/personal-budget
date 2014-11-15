@@ -1,6 +1,6 @@
 {
     "name": "Daily Expenses",
-    "description": "Keep track of your daily expenses within a simplistic form",
+    "description": "Set your personal budget and watch its decrease as you record your daily expenses.",
     "version": "0.1",
     "developer": {
         "name": "Luka Zitnik"
