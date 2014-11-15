@@ -1,13 +1,32 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: ["build"],
+        clean: {
+            init: ["build"],
+            retina: ["build/library/**/*@*x.png"],
+            examples: ["build/library/**/*.html"]
+        },
         copy: {
             main: {
                 expand: true,
                 cwd: "www",
                 src: "**",
                 dest: "build"
+            },
+            retina: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build/library',
+                        src: [
+                            '**/*@*x.png'
+                        ],
+                        dest: "build/library/",
+                        rename: function (dest, src) {
+                            return dest + src.replace(/@[\d\.]+x/, '');
+                        }
+                    }
+                ]
             }
         }
     });
@@ -15,5 +34,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-copy");
 
-    grunt.registerTask("build", ["clean", "copy"]);
+    grunt.registerTask("build", ["clean:init", "copy:main", "clean:examples", "copy:retina", "clean:retina"]);
 };
