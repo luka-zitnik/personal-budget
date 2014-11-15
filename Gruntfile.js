@@ -4,7 +4,8 @@ module.exports = function (grunt) {
         clean: {
             init: ["build"],
             retina: ["build/library/**/*@*x.png"],
-            examples: ["build/library/**/*.html"]
+            examples: ["build/library/**/*.html"],
+            debug: ["build/library/knockout-*.debug.js"]
         },
         copy: {
             main: {
@@ -34,5 +35,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-copy");
 
-    grunt.registerTask("build", ["clean:init", "copy:main", "clean:examples", "copy:retina", "clean:retina"]);
+    grunt.registerTask("build", [
+        "clean:init",
+        "copy:main",
+        "clean:examples",
+        "clean:debug",
+        "copy:retina",
+        "clean:retina"
+    ]);
 };
