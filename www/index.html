@@ -89,6 +89,16 @@
             #no-expenses p.small {
                 font-size: 1.6rem;
             }
+            [role="application"] section[role="region"] > section {
+                box-sizing: border-box;
+                overflow-y: auto;
+                height: calc(100% - 5rem);
+                width: 100%;
+                overflow-x: hidden;
+            }
+            [role="application"] > section[role="region"] > section {
+                height: calc(100% - 8.6rem);
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
@@ -177,34 +187,34 @@
                     </a>
                     <h1>Add Expense</h1>
                 </header>
-            </section>
-            <section>
-                <form data-type="add" data-bind="submit: addExpense">
-                    <p>
-                        <label for="add-expense-label">Label</label>
-                    </p>
-                    <p>
-                        <input id="add-expense-label" data-bind="value: label" type="text" required="" placeholder="How do you label this expense?">
-                        <button type="reset" tabindex="-1" data-bind="reset: true"></button>
-                    </p>
-                    <p>
-                        <label for="add-expense-amount">Amount</label>
-                    </p>
-                    <p>
-                        <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
-                        <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
-                        <button type="reset" tabindex="-1" data-bind="reset: true"></button>
-                    </p>
-                    <p>
-                        <label for="add-expense-date">Date</label>
-                    </p>
-                    <p>
-                        <input id="add-expense-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
-                    </p>
-                    <p>
-                        <button>Add</button>
-                    </p>
-                </form>
+                <section>
+                    <form data-type="add" data-bind="submit: addExpense">
+                        <p>
+                            <label for="add-expense-label">Label</label>
+                        </p>
+                        <p>
+                            <input id="add-expense-label" data-bind="value: label" type="text" required="" placeholder="How do you label this expense?">
+                            <button type="reset" tabindex="-1" data-bind="reset: true"></button>
+                        </p>
+                        <p>
+                            <label for="add-expense-amount">Amount</label>
+                        </p>
+                        <p>
+                            <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
+                            <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
+                            <button type="reset" tabindex="-1" data-bind="reset: true"></button>
+                        </p>
+                        <p>
+                            <label for="add-expense-date">Date</label>
+                        </p>
+                        <p>
+                            <input id="add-expense-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                        </p>
+                        <p>
+                            <button>Add</button>
+                        </p>
+                    </form>
+                </section>
             </section>
         </article>
         <div id="options">
@@ -275,23 +285,23 @@
                     </menu>
                     <h1 data-bind="text: date"></h1>
                 </header>
-            </section>
-            <section data-type="list">
-                <ul data-bind="foreach: expensesList, attr: {'data-type': state}">
-                    <li>
-                        <label class="pack-checkbox danger">
-                            <input type="checkbox" data-bind="checked: markedForDeletion"/>
-                            <span></span>
-                        </label>
-                        <aside class="pack-end">
-                            <p>
-                                <span data-bind="text: monthlyExpenses.currencyCode"></span>
-                                <span data-bind="text: amount().toFixed(2)"></span>
-                            </p>
-                        </aside>
-                        <p data-bind="text: label"></p>
-                    </li>
-                </ul>
+                <section data-type="list">
+                    <ul data-bind="foreach: expensesList, attr: {'data-type': state}">
+                        <li>
+                            <label class="pack-checkbox danger">
+                                <input type="checkbox" data-bind="checked: markedForDeletion"/>
+                                <span></span>
+                            </label>
+                            <aside class="pack-end">
+                                <p>
+                                    <span data-bind="text: monthlyExpenses.currencyCode"></span>
+                                    <span data-bind="text: amount().toFixed(2)"></span>
+                                </p>
+                            </aside>
+                            <p data-bind="text: label"></p>
+                        </li>
+                    </ul>
+                </section>
             </section>
             <form data-type="edit" role="dialog" data-bind="visible: state() === 'edit'">
                 <section role="region">
