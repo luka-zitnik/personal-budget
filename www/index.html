@@ -150,8 +150,11 @@
             <header>
                 <h2>
                     Your budget total is
-                    <strong data-bind="text: currencyCode"></strong>
-                    <strong data-bind="text: remaining().toFixed(2)"></strong>.
+                    <span style="white-space: nowrap">
+                        <strong data-bind="text: currencyCode"></strong>
+                        <strong data-bind="text: remaining().toFixed(2)"></strong><!--
+                        -->.
+                    </span>
                 </h2>
             </header>
             <section data-type="list" data-bind="foreach: monthlyExpensesList">
