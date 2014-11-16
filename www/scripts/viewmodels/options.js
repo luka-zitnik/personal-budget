@@ -3,11 +3,11 @@ var options = {
     containerNode: document.getElementById("options-view"),
     currencyCode: ko.observable(currency.getChosenCurrencyCode() || "Currency not selected"),
     budgetStartDate: ko.observable(localStorage.getItem("budgetStartDate") || ""),
-    budgetAmount: ko.observable(localStorage.getItem("budgetAmount") || ""),
+    budgetValue: ko.observable(localStorage.getItem("budgetValue") || ""),
     invalidBudgetStartDateConfirm: {
 
         heading: "Invalid date",
-        message: "Budget start date is not a valid date.",
+        message: "Please format Budget Start Date as suggested by the placeholder.",
         visible: ko.observable(false),
 
         fix: function() {
@@ -15,17 +15,17 @@ var options = {
         },
 
         reset: function() {
-            options.reset("budgetAmount");
+            options.reset("budgetValue");
             options.reset("budgetStartDate");
             options.hide();
             this.visible(false);
         }
 
     },
-    invalidBudgetAmountConfirm: {
+    invalidBudgetValueConfirm: {
 
         heading: "Invalid number",
-        message: "Budget amount is not a valid number.",
+        message: "Please format Budget Value as suggested by the placeholder.",
         visible: ko.observable(false),
 
         fix: function() {
@@ -33,7 +33,7 @@ var options = {
         },
 
         reset: function() {
-            options.reset("budgetAmount");
+            options.reset("budgetValue");
             options.reset("budgetStartDate");
             options.hide();
             this.visible(false);
@@ -58,11 +58,11 @@ var options = {
     },
 
     close: function() {
-        var amount = this.containerNode.querySelector("input[type=number]"),
+        var value = this.containerNode.querySelector("input[type=number]"),
             date = this.containerNode.querySelector("input[type=date]");
 
-        if (amount.checkValidity() === false) {
-            this.invalidBudgetAmountConfirm.visible(true);
+        if (value.checkValidity() === false) {
+            this.invalidBudgetValueConfirm.visible(true);
             return;
         }
 
@@ -71,7 +71,7 @@ var options = {
             return;
         }
 
-        this.persist("budgetAmount");
+        this.persist("budgetValue");
         this.persist("budgetStartDate");
 
         this.hide();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Daily Expenses</title>
+        <title>Personal Budget</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
@@ -73,20 +73,20 @@
             [role="dialog"][data-type="value-selector"] {
                 position: fixed !important;
             }
-            #no-expenses {
+            #no-expenditures {
                 text-align: left;
             }
-            #no-expenses .info {
+            #no-expenditures .info {
                 border-top: 0.1rem solid rgba(96, 96, 96, 0.5);
                 color: #606060;
                 font-size: 2rem;
                 font-weight: lighter;
                 margin: 15rem 2rem 0px;
             }
-            #no-expenses .info p {
+            #no-expenditures .info p {
                 margin: 1rem;
             }
-            #no-expenses p.small {
+            #no-expenditures p.small {
                 font-size: 1.6rem;
             }
             [role="application"] section[role="region"] > section {
@@ -124,13 +124,13 @@
         <script src="library/underscore-1.7.0.js" defer></script>
         <script src="library/knockout-3.2.0.js" defer></script>
         <script src="scripts/viewmodels/options.js" defer></script>
-        <script src="scripts/viewmodels/addExpense.js" defer></script>
+        <script src="scripts/viewmodels/newExpenditure.js" defer></script>
         <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
         <script src="scripts/viewmodels/currencySelector.js" defer></script>
         <script src="scripts/viewmodels/DailySum.js" defer></script>
-        <script src="scripts/viewmodels/DailyExpenses.js" defer></script>
-        <script src="scripts/viewmodels/monthlyExpenses.js" defer></script>
-        <script src="scripts/viewmodels/Expense.js" defer></script>
+        <script src="scripts/viewmodels/DailyExpenditures.js" defer></script>
+        <script src="scripts/viewmodels/monthlyExpenditures.js" defer></script>
+        <script src="scripts/viewmodels/Expenditure.js" defer></script>
         <script src="scripts/viewmodels/dailyList.js" defer></script>
         <script src="scripts/app.js" defer></script>
     </head>
@@ -138,18 +138,18 @@
         <section role="region" id="monthly-list">
             <header>
                 <menu type="toolbar">
-                    <a data-bind="click: addExpense.open.bind(addExpense)">
+                    <a data-bind="click: newExpenditure.open.bind(newExpenditure)">
                         <span class="icon icon-add">Add</span>
                     </a>
                     <a data-bind="click: options.open.bind(options)">
                         <span class="icon icon-options">Options</span>
                     </a>
                 </menu>
-                <h1>Daily Expenses</h1>
+                <h1>Personal Budget</h1>
             </header>
             <header>
                 <h2>
-                    Your budget total is
+                    Your balance is
                     <span style="white-space: nowrap">
                         <strong data-bind="text: currencyCode"></strong>
                         <strong data-bind="text: remaining().toFixed(2)"></strong><!--
@@ -157,7 +157,7 @@
                     </span>
                 </h2>
             </header>
-            <section data-type="list" data-bind="foreach: monthlyExpensesList">
+            <section data-type="list" data-bind="foreach: monthlyExpendituresList">
                 <header>
                     <aside class="pack-end">
                         <span data-bind="text: $root.currencyCode"></span>
@@ -165,7 +165,7 @@
                     </aside>
                     <span data-bind="text: month"></span>
                 </header>
-                <ul data-bind="foreach: dailyExpensesList">
+                <ul data-bind="foreach: dailyExpendituresList">
                     <li>
                         <a data-bind="click: openDailyList">
                             <aside class="pack-end">
@@ -180,47 +180,47 @@
                 </ul>
             </section>
             <section data-bind="visible: welcomeIsVisible">
-                <div id="no-expenses">
+                <div id="no-expenditures">
                     <div class="info">
-                        <p>No expenses yet</p>
+                        <p>No expenditures yet</p>
                         <p class="small">
-                            You can start by recording today's expenses or
-                            limiting future expenses.
+                            Start by recording your recent expenditures or
+                            adjusting your balance.
                         </p>
                     </div>
                 </div>
             </section>
         </section>
-        <article aria-hidden="true" id="add-expense-view">
+        <article aria-hidden="true" id="add-expenditure-view">
             <section role="region">
                 <header>
                     <a data-bind="click: close">
                         <span class="icon icon-back">Back</span>
                     </a>
-                    <h1>Add Expense</h1>
+                    <h1>New Expenditure</h1>
                 </header>
                 <section>
-                    <form data-type="add" data-bind="submit: addExpense">
+                    <form data-type="add" data-bind="submit: newExpenditure">
                         <p>
-                            <label for="add-expense-label">Label</label>
+                            <label for="add-expenditure-label">Label</label>
                         </p>
                         <p>
-                            <input id="add-expense-label" data-bind="value: label" type="text" required="" placeholder="How do you label this expense?">
+                            <input id="add-expenditure-label" data-bind="value: label" type="text" required="" placeholder="How do you call this expenditure?">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
-                            <label for="add-expense-amount">Amount</label>
+                            <label for="add-expenditure-value">Value</label>
                         </p>
                         <p>
-                            <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
-                            <input id="add-expense-amount" data-bind="value: amount" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
+                            <span class="currency" data-bind="text: monthlyExpenditures.currencyCode"></span>
+                            <input id="add-expenditure-value" data-bind="value: value" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
-                            <label for="add-expense-date">Date</label>
+                            <label for="add-expenditure-date">Date</label>
                         </p>
                         <p>
-                            <input id="add-expense-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                            <input id="add-expenditure-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </p>
                         <p>
                             <button>Add</button>
@@ -252,11 +252,11 @@
                         </header>
                         <form data-type="options">
                             <p>
-                                <label for="options-budget-amount">Amount</label>
+                                <label for="options-budget-value">Value</label>
                             </p>
                             <p>
-                                <span class="currency" data-bind="text: monthlyExpenses.currencyCode"></span>
-                                <input id="options-budget-amount" data-bind="textInput: budgetAmount" type="number" step="0.01" min="0.00" pattern="\d*\.\d{0,2}" placeholder="0.00">
+                                <span class="currency" data-bind="text: monthlyExpenditures.currencyCode"></span>
+                                <input id="options-budget-value" data-bind="textInput: budgetValue" type="number" step="0.01" min="0.00" pattern="\d*\.\d{0,2}" placeholder="0.00">
                                 <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                             </p>
                             <p>
@@ -270,7 +270,7 @@
                 </section>
             </article>
             <div data-bind="template: { name: 'options-invalid-template', data: invalidBudgetStartDateConfirm, if: invalidBudgetStartDateConfirm.visible }"></div>
-            <div data-bind="template: { name: 'options-invalid-template', data: invalidBudgetAmountConfirm, if: invalidBudgetAmountConfirm.visible }"></div>
+            <div data-bind="template: { name: 'options-invalid-template', data: invalidBudgetValueConfirm, if: invalidBudgetValueConfirm.visible }"></div>
         </div>
         <script type="text/html" id="options-invalid-template">
             <form data-type="confirm" role="dialog" data-bind="submit: fix">
@@ -298,7 +298,7 @@
                     <h1 data-bind="text: date"></h1>
                 </header>
                 <section data-type="list">
-                    <ul data-bind="foreach: expensesList, attr: {'data-type': state}">
+                    <ul data-bind="foreach: expendituresList, attr: {'data-type': state}">
                         <li>
                             <label class="pack-checkbox danger">
                                 <input type="checkbox" data-bind="checked: markedForDeletion"/>
@@ -306,8 +306,8 @@
                             </label>
                             <aside class="pack-end">
                                 <p>
-                                    <span data-bind="text: monthlyExpenses.currencyCode"></span>
-                                    <span data-bind="text: amount().toFixed(2)"></span>
+                                    <span data-bind="text: monthlyExpenditures.currencyCode"></span>
+                                    <span data-bind="text: value().toFixed(2)"></span>
                                 </p>
                             </aside>
                             <p data-bind="text: label"></p>
@@ -322,7 +322,7 @@
                             <span class="icon icon-close">Close</span>
                         </a>
                         <menu type="toolbar">
-                            <a data-bind="click: deleteExpenses">Delete</a>
+                            <a data-bind="click: deleteExpenditures">Delete</a>
                         </menu>
                         <h1 data-bind="text: date"></h1>
                     </header>

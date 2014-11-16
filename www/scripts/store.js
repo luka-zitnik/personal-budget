@@ -1,8 +1,8 @@
 var store = {
 
-    dbName: "DailyExpenses",
+    dbName: "DailyExpenditures",
     dbVersion: 1,
-    storeName: "daily_expenses",
+    storeName: "daily_expenditures",
 
     checkSupport: function() {
         if (!window.indexedDB) {

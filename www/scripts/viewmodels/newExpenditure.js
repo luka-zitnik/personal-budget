@@ -1,8 +1,8 @@
-var addExpense = {
+var newExpenditure = {
 
-    containerNode: document.getElementById("add-expense-view"),
+    containerNode: document.getElementById("add-expenditure-view"),
     label: ko.observable(),
-    amount: ko.observable(),
+    value: ko.observable(),
     date: ko.observable(),
 
     open: function() {
@@ -13,34 +13,34 @@ var addExpense = {
         return this.containerNode.querySelector("form").checkValidity();
     },
 
-    addExpense: function () {
+    newExpenditure: function () {
         var date = this.date(),
             label = this.label(),
             month = date.substring(0, 7),
-            amount = parseFloat(this.amount());
+            value = parseFloat(this.value());
 
-        monthlyExpenses.updateMonthlyExpensesList(
+        monthlyExpenditures.updateMonthlyExpendituresList(
             month,
             date,
-            amount
+            value
         );
         this.resetForm();
         this.close();
         this.persistIntoDB(
             date,
             label,
-            amount
+            value
         );
     },
 
     resetForm: function() {
         this.label(null);
-        this.amount(null);
+        this.value(null);
         this.date(null);
     },
 
-    persistIntoDB: function (date, label, amount) {
-        store.insert({date: date, label: label, amount: amount});
+    persistIntoDB: function (date, label, value) {
+        store.insert({date: date, label: label, value: value});
     },
 
     close: function () {

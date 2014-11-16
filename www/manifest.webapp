@@ -1,6 +1,6 @@
 {
-    "name": "Daily Expenses",
-    "description": "Set your personal budget and watch its decrease as you record your daily expenses.",
+    "name": "Personal Budget",
+    "description": "Arrange your budget and watch balance changes as you note down your current expenditures.",
     "version": "0.1",
     "developer": {
         "name": "Luka Zitnik"
