@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         compress: {
             main: {
                 options: {
-                    archive: "personal-budget.zip"
+                    archive: "dist/personal-budget.zip"
                 },
                 expand: true,
                 cwd: "build",
