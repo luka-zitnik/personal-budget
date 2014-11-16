@@ -2,7 +2,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         clean: {
-            init: ["build"],
+            init: ["build", "dist"],
             retina: ["build/library/**/*@*x.png"],
             examples: ["build/library/**/*.html"],
             debug: ["build/library/knockout-*.debug.js"]
@@ -29,11 +29,22 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        compress: {
+            main: {
+                options: {
+                    archive: "daily-expenses.zip"
+                },
+                expand: true,
+                cwd: "build",
+                src: "**"
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     grunt.registerTask("build", [
         "clean:init",
@@ -41,6 +52,7 @@ module.exports = function (grunt) {
         "clean:examples",
         "clean:debug",
         "copy:retina",
-        "clean:retina"
+        "clean:retina",
+        "compress"
     ]);
 };
