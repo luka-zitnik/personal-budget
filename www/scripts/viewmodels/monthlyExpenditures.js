@@ -3,6 +3,7 @@ var monthlyExpenditures = {
     welcomeIsVisible: ko.observable(false),
     currencyCode: ko.observable(currency.getChosenCurrencyCode()),
     monthlyExpendituresList: ko.observableArray(),
+    progress: ko.observable(0),
 
     initialize: function() {
         var self = this;
@@ -22,6 +23,7 @@ var monthlyExpenditures = {
         this.setExpenditures(
             this.translateStoreValuesToDailyExpenditures(aggregatedStoreValues)
         );
+        this.progress(100);
     },
 
     aggregateStoreValues: function (aggregatedStoreValues, storeValue) {

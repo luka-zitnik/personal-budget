@@ -108,6 +108,9 @@
                 height: 3rem;
                 vertical-align: middle;
             }
+            progress[value="100"] {
+                display: none !important;
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
@@ -118,6 +121,7 @@
         <link rel="stylesheet" href="library/bb-69a6e9c/style/edit_mode.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/switches.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/confirm.css" />
+        <link rel="stylesheet" href="library/bb-69a6e9c/style/progress_activity.css" />
         <script src="scripts/store.js" defer></script>
         <script src="scripts/placefinder.js" defer></script>
         <script src="scripts/currency.js" defer></script>
@@ -147,6 +151,7 @@
                 </menu>
                 <h1>Personal Budget</h1>
             </header>
+            <progress class="pack-activity" max="100" data-bind="attr: {value: progress}"></progress>
             <header>
                 <h2>
                     Your balance is
