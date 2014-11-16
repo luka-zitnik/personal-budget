@@ -9,11 +9,7 @@ var newExpenditure = {
         this.containerNode.setAttribute("aria-hidden", "false");
     },
 
-    formIsValid: function() {
-        return this.containerNode.querySelector("form").checkValidity();
-    },
-
-    newExpenditure: function () {
+    add: function () {
         var date = this.date(),
             label = this.label(),
             month = date.substring(0, 7),
@@ -24,22 +20,22 @@ var newExpenditure = {
             date,
             value
         );
-        this.resetForm();
+        this.reset();
         this.close();
-        this.persistIntoDB(
+        this.persist(
             date,
             label,
             value
         );
     },
 
-    resetForm: function() {
+    reset: function() {
         this.label(null);
         this.value(null);
         this.date(null);
     },
 
-    persistIntoDB: function (date, label, value) {
+    persist: function (date, label, value) {
         store.add({date: date, label: label, value: value});
     },
 
@@ -48,3 +44,10 @@ var newExpenditure = {
     }
 
 };
+
+newExpenditure.valid = ko.computed(function() {
+    this.value();
+    this.label();
+    this.date();
+    return this.containerNode.querySelector("form").checkValidity();
+}.bind(newExpenditure));

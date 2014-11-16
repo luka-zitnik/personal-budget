@@ -207,12 +207,12 @@
                     <h1>New Expenditure</h1>
                 </header>
                 <section>
-                    <form data-type="add" data-bind="submit: newExpenditure">
+                    <form data-type="add" data-bind="submit: add">
                         <p>
                             <label for="add-expenditure-label">Label</label>
                         </p>
                         <p>
-                            <input id="add-expenditure-label" data-bind="value: label" type="text" required="" placeholder="How do you call this expenditure?">
+                            <input id="add-expenditure-label" data-bind="textInput: label" type="text" required="" placeholder="How do you call this expenditure?">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
@@ -220,7 +220,7 @@
                         </p>
                         <p>
                             <span class="currency" data-bind="text: monthlyExpenditures.currencyCode"></span>
-                            <input id="add-expenditure-value" data-bind="value: value" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
+                            <input id="add-expenditure-value" data-bind="textInput: value" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
@@ -230,7 +230,7 @@
                             <input id="add-expenditure-date" data-bind="textInput: date" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </p>
                         <p>
-                            <button>Add</button>
+                            <button data-bind="enable: valid">Add</button>
                         </p>
                     </form>
                 </section>
