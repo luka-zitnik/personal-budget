@@ -1,8 +1,8 @@
 var store = {
 
-    dbName: "DailyExpenditures",
+    dbName: "Expenditures",
     dbVersion: 1,
-    storeName: "daily_expenditures",
+    storeName: "expenditures",
 
     checkSupport: function() {
         if (!window.indexedDB) {
@@ -99,7 +99,7 @@ var store = {
         };
     },
 
-    insert: function (storeValue) {
+    add: function (storeValue) {
         var self = this,
             openDBRequest;
 

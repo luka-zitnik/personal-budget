@@ -40,7 +40,7 @@ var newExpenditure = {
     },
 
     persistIntoDB: function (date, label, value) {
-        store.insert({date: date, label: label, value: value});
+        store.add({date: date, label: label, value: value});
     },
 
     close: function () {
