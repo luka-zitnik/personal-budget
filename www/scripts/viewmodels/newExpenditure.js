@@ -12,8 +12,22 @@ var newExpenditure = {
     add: function () {
         var date = this.date(),
             label = this.label(),
-            month = date.substring(0, 7),
             value = parseFloat(this.value());
+
+        // first run the empty field is undefined, then it is set to null. I did not want to change other code
+        if(typeof label=="undefined" || label==null) // user does not have to fill the label
+            label="";
+
+        // if user does not fill the date, it will be the current date
+        if(typeof date=="undefined" || date==null) {
+            var currTime=new Date();
+            date=currTime.getFullYear();
+            var month=currTime.getMonth()+1;
+            date+="-"+(month<10 ? "0":"")+month;
+            date+="-"+(currTime.getDate()<10 ? "0":"")+currTime.getDate();
+        }
+
+        var month = date.substring(0, 7);
 
         monthlyExpenditures.updateMonthlyExpendituresList(
             month,
