@@ -3,7 +3,7 @@ var newExpenditure = {
     containerNode: document.getElementById("add-expenditure-view"),
     label: ko.observable(),
     value: ko.observable(),
-    date: ko.observable(),
+    date: ko.observable(getCurrentDate()),
 
     open: function() {
         this.containerNode.setAttribute("aria-hidden", "false");
@@ -11,23 +11,9 @@ var newExpenditure = {
 
     add: function () {
         var date = this.date(),
-            label = this.label(),
-            value = parseFloat(this.value());
-
-        // first run the empty field is undefined, then it is set to null. I did not want to change other code
-        if(typeof label=="undefined" || label==null) // user does not have to fill the label
-            label="";
-
-        // if user does not fill the date, it will be the current date
-        if(typeof date=="undefined" || date==null) {
-            var currTime=new Date();
-            date=currTime.getFullYear();
-            var month=currTime.getMonth()+1;
-            date+="-"+(month<10 ? "0":"")+month;
-            date+="-"+(currTime.getDate()<10 ? "0":"")+currTime.getDate();
-        }
-
-        var month = date.substring(0, 7);
+            label = this.label() || "",
+            value = parseFloat(this.value()),
+            month = date.substring(0, 7);
 
         monthlyExpenditures.updateMonthlyExpendituresList(
             month,
@@ -44,9 +30,9 @@ var newExpenditure = {
     },
 
     reset: function() {
-        this.label(null);
-        this.value(null);
-        this.date(null);
+        this.label(undefined);
+        this.value(undefined);
+        this.date(getCurrentDate());
     },
 
     persist: function (date, label, value) {
@@ -58,6 +44,16 @@ var newExpenditure = {
     }
 
 };
+
+function getCurrentDate() {
+    var currTime = new Date(),
+        month = currTime.getMonth() + 1;
+
+    // return ISO 8601 date string
+    return currTime.getFullYear()
+        + "-" + (month < 10 ? "0" : "") + month
+        + "-" + (currTime.getDate() < 10 ? "0" : "") + currTime.getDate();
+}
 
 newExpenditure.valid = ko.computed(function() {
     this.value();
