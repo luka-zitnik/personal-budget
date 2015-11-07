@@ -4,7 +4,7 @@ var app = {
         monthlyList: document.getElementById("monthly-list"),
         currencySuggestDialog: document.getElementById("currency-suggest-dialog"),
         currencySelectDialog: document.getElementById("currency-select-dialog"),
-        newExpenditure: document.getElementById("add-expenditure-view"),
+        newRecord: document.getElementById("add-record-view"),
         options: document.getElementById("options"),
         dailyList: document.getElementById("daily-list-view")
     },
@@ -27,10 +27,10 @@ var app = {
     },
 
     bindViews: function() {
-        ko.applyBindings(monthlyExpenditures, this.views.monthlyList);
+        ko.applyBindings(monthlyRecords, this.views.monthlyList);
         ko.applyBindings(currencySuggestion, this.views.currencySuggestDialog);
         ko.applyBindings(currencySelector, this.views.currencySelectDialog),
-        ko.applyBindings(newExpenditure, this.views.newExpenditure);
+        ko.applyBindings(newRecord, this.views.newRecord);
         ko.applyBindings(options, this.views.options);
         ko.applyBindings(dailyList, this.views.dailyList);
     }

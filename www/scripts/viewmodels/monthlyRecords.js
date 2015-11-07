@@ -1,8 +1,8 @@
-var monthlyExpenditures = {
+var monthlyRecords = {
 
     welcomeIsVisible: ko.observable(false),
     currencyCode: ko.observable(currency.getChosenCurrencyCode()),
-    monthlyExpendituresList: ko.observableArray(),
+    monthlyRecordsList: ko.observableArray(),
     progress: ko.observable(0),
 
     initialize: function() {
@@ -20,8 +20,8 @@ var monthlyExpenditures = {
     },
 
     displayStoreValues: function (aggregatedStoreValues) {
-        this.setExpenditures(
-            this.translateStoreValuesToDailyExpenditures(aggregatedStoreValues)
+        this.setRecords(
+            this.translateStoreValuesToDailyRecords(aggregatedStoreValues)
         );
         this.progress(100);
     },
@@ -41,52 +41,52 @@ var monthlyExpenditures = {
         }
     },
 
-    setExpenditures: function(monthlyExpenditures) {
-        this.monthlyExpendituresList(monthlyExpenditures);
-        this.welcomeIsVisible(monthlyExpenditures.length === 0);
+    setRecords: function(monthlyRecords) {
+        this.monthlyRecordsList(monthlyRecords);
+        this.welcomeIsVisible(monthlyRecords.length === 0);
     },
 
-    translateStoreValuesToDailyExpenditures: function (aggregatedStoreValues) {
+    translateStoreValuesToDailyRecords: function (aggregatedStoreValues) {
         var areInDescLexOrd = function(x, y) {
                 return x <= y;
             },
             months = Object.keys(aggregatedStoreValues).sort(areInDescLexOrd),
-            monthlyExpenditures = [],
+            monthlyRecords = [],
             days,
-            dailyExpenditures,
+            dailyRecords,
             i,
             j;
 
         for (i = 0; i < months.length; ++i) {
-            dailyExpenditures = [];
+            dailyRecords = [];
             days = Object.keys(aggregatedStoreValues[months[i]]).sort(areInDescLexOrd);
             for (j = 0; j < days.length; ++j) {
-                dailyExpenditures.push(new DailySum(days[j], aggregatedStoreValues[months[i]][days[j]]));
+                dailyRecords.push(new DailySum(days[j], aggregatedStoreValues[months[i]][days[j]]));
             }
-            monthlyExpenditures.push(new DailyExpenditures(months[i], dailyExpenditures));
+            monthlyRecords.push(new DailyRecords(months[i], dailyRecords));
         }
 
-        return monthlyExpenditures;
+        return monthlyRecords;
     },
 
-    updateMonthlyExpendituresList: function (month, date, value) {
-        var dailyExpenditures = this.findDailyExpenditures(month);
+    updateMonthlyRecordsList: function (month, date, value) {
+        var dailyRecords = this.findDailyRecords(month);
 
-        if ((dailyExpenditures instanceof DailyExpenditures) === false) {
-            dailyExpenditures = new DailyExpenditures(month, []);
-            this.monthlyExpendituresList.push(dailyExpenditures);
-            this.monthlyExpendituresList.sort(function(x, y) {
+        if ((dailyRecords instanceof DailyRecords) === false) {
+            dailyRecords = new DailyRecords(month, []);
+            this.monthlyRecordsList.push(dailyRecords);
+            this.monthlyRecordsList.sort(function(x, y) {
                 return x.month <= y.month;
             });
         }
 
-        dailyExpenditures.updateDailyExpendituresList(date, value);
+        dailyRecords.updateDailyRecordsList(date, value);
 
-        this.welcomeIsVisible(this.monthlyExpendituresList().length === 0);
+        this.welcomeIsVisible(this.monthlyRecordsList().length === 0);
     },
 
-    findDailyExpenditures: function (month) {
-        var list = this.monthlyExpendituresList(),
+    findDailyRecords: function (month) {
+        var list = this.monthlyRecordsList(),
             i = 0;
 
         for (; i < list.length; ++i) {
@@ -100,24 +100,24 @@ var monthlyExpenditures = {
 
 };
 
-monthlyExpenditures.remaining = ko.computed(function() {
+monthlyRecords.remaining = ko.computed(function() {
     var budgetStartDate = options.budgetStartDate(),
         budgetValue = options.budgetValue(),
         i = 0,
         sum = 0,
         j;
 
-    for (; i < this.monthlyExpendituresList().length; ++i) {
-        for (j = 0; j < this.monthlyExpendituresList()[i].dailyExpendituresList().length; ++j) {
-            if (this.monthlyExpendituresList()[i].dailyExpendituresList()[j].date < budgetStartDate) {
+    for (; i < this.monthlyRecordsList().length; ++i) {
+        for (j = 0; j < this.monthlyRecordsList()[i].dailyRecordsList().length; ++j) {
+            if (this.monthlyRecordsList()[i].dailyRecordsList()[j].date < budgetStartDate) {
                 return budgetValue - sum;
             }
 
-            sum += this.monthlyExpendituresList()[i].dailyExpendituresList()[j].dailySum();
+            sum += this.monthlyRecordsList()[i].dailyRecordsList()[j].dailySum();
         }
     }
 
     return budgetValue - sum;
-}.bind(monthlyExpenditures));
+}.bind(monthlyRecords));
 
-monthlyExpenditures.initialize();
+monthlyRecords.initialize();

@@ -1,7 +1,7 @@
 var dailyList = {
 
     date: ko.observable(),
-    expendituresList: ko.observableArray(),
+    recordsList: ko.observableArray(),
     containerNode: document.getElementById("daily-list-view"),
     state: ko.observable("list"), // "list" or "edit"
 
@@ -12,7 +12,7 @@ var dailyList = {
     },
 
     each: function(previous, current, key) {
-        this.expendituresList.push(new Expenditure(
+        this.recordsList.push(new Record(
             current.date,
             current.value,
             current.label,
@@ -22,21 +22,21 @@ var dailyList = {
 
     close: function() {
         this.containerNode.setAttribute("aria-hidden", "true");
-        this.expendituresList().length = 0;
+        this.recordsList().length = 0;
     },
 
-    deleteExpenditures: function() {
-        var i = this.expendituresList().length;
+    deleteRecords: function() {
+        var i = this.recordsList().length;
 
         while (i--) {
-            if (this.expendituresList()[i].markedForDeletion() === true) {
-                store.delete(this.expendituresList()[i].key);
-                this.expendituresList.splice(i, 1);
+            if (this.recordsList()[i].markedForDeletion() === true) {
+                store.delete(this.recordsList()[i].key);
+                this.recordsList.splice(i, 1);
             }
         }
 
         this.state("list");
-        monthlyExpenditures.list();
+        monthlyRecords.list();
     }
 
 };

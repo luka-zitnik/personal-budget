@@ -73,20 +73,20 @@
             [role="dialog"][data-type="value-selector"] {
                 position: fixed !important;
             }
-            #no-expenditures {
+            #no-records {
                 text-align: left;
             }
-            #no-expenditures .info {
+            #no-records .info {
                 border-top: 0.1rem solid rgba(96, 96, 96, 0.5);
                 color: #606060;
                 font-size: 2rem;
                 font-weight: lighter;
                 margin: 15rem 2rem 0px;
             }
-            #no-expenditures .info p {
+            #no-records .info p {
                 margin: 1rem;
             }
-            #no-expenditures p.small {
+            #no-records p.small {
                 font-size: 1.6rem;
             }
             [role="application"] section[role="region"] > section {
@@ -130,13 +130,13 @@
         <script src="library/underscore-1.7.0.js" defer></script>
         <script src="library/knockout-3.2.0.js" defer></script>
         <script src="scripts/viewmodels/options.js" defer></script>
-        <script src="scripts/viewmodels/newExpenditure.js" defer></script>
+        <script src="scripts/viewmodels/newRecord.js" defer></script>
         <script src="scripts/viewmodels/currencySuggestion.js" defer></script>
         <script src="scripts/viewmodels/currencySelector.js" defer></script>
         <script src="scripts/viewmodels/DailySum.js" defer></script>
-        <script src="scripts/viewmodels/DailyExpenditures.js" defer></script>
-        <script src="scripts/viewmodels/monthlyExpenditures.js" defer></script>
-        <script src="scripts/viewmodels/Expenditure.js" defer></script>
+        <script src="scripts/viewmodels/DailyRecords.js" defer></script>
+        <script src="scripts/viewmodels/monthlyRecords.js" defer></script>
+        <script src="scripts/viewmodels/Record.js" defer></script>
         <script src="scripts/viewmodels/dailyList.js" defer></script>
         <script src="scripts/app.js" defer></script>
     </head>
@@ -144,7 +144,7 @@
         <section role="region" id="monthly-list">
             <header>
                 <menu type="toolbar">
-                    <a data-bind="click: newExpenditure.open.bind(newExpenditure)">
+                    <a data-bind="click: newRecord.open.bind(newRecord)">
                         <span class="icon icon-add">Add</span>
                     </a>
                     <a data-bind="click: options.open.bind(options)">
@@ -164,7 +164,7 @@
                     </span>
                 </h2>
             </header>
-            <section data-type="list" data-bind="foreach: monthlyExpendituresList">
+            <section data-type="list" data-bind="foreach: monthlyRecordsList">
                 <header>
                     <aside class="pack-end">
                         <span data-bind="text: $root.currencyCode"></span>
@@ -172,7 +172,7 @@
                     </aside>
                     <span data-bind="text: month"></span>
                 </header>
-                <ul data-bind="foreach: dailyExpendituresList">
+                <ul data-bind="foreach: dailyRecordsList">
                     <li>
                         <a data-bind="click: openDailyList">
                             <aside class="pack-end">
@@ -187,47 +187,47 @@
                 </ul>
             </section>
             <section data-bind="visible: welcomeIsVisible">
-                <div id="no-expenditures">
+                <div id="no-records">
                     <div class="info">
-                        <p>No expenditures yet</p>
+                        <p>No records yet</p>
                         <p class="small">
-                            Start by recording your recent expenditures or
+                            Start by recording your recent records or
                             adjusting your balance.
                         </p>
                     </div>
                 </div>
             </section>
         </section>
-        <article aria-hidden="true" id="add-expenditure-view">
+        <article aria-hidden="true" id="add-record-view">
             <section role="region">
                 <header>
                     <a data-bind="click: close">
                         <span class="icon icon-back">Back</span>
                     </a>
-                    <h1>New Expenditure</h1>
+                    <h1>New Record</h1>
                 </header>
                 <section>
                     <form data-type="add" data-bind="submit: add">
                         <p>
-                            <label for="add-expenditure-label">Label</label>
+                            <label for="add-record-label">Label</label>
                         </p>
                         <p>
-                            <input id="add-expenditure-label" data-bind="textInput: label" type="text" placeholder="How do you call this expenditure?">
+                            <input id="add-record-label" data-bind="textInput: label" type="text" placeholder="How do you call this record?">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
-                            <label for="add-expenditure-value">Value</label>
+                            <label for="add-record-value">Value</label>
                         </p>
                         <p>
-                            <span class="currency" data-bind="text: monthlyExpenditures.currencyCode"></span>
-                            <input id="add-expenditure-value" data-bind="textInput: value" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
+                            <span class="currency" data-bind="text: monthlyRecords.currencyCode"></span>
+                            <input id="add-record-value" data-bind="textInput: value" type="number" step="0.01" min="0.00" required="" placeholder="0.00">
                             <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                         </p>
                         <p>
-                            <label for="add-expenditure-date">Date</label>
+                            <label for="add-record-date">Date</label>
                         </p>
                         <p>
-                            <input id="add-expenditure-date" data-bind="textInput: date" type="date" pattern="\d{4}-\d{2}-\d{2}" required="" placeholder="YYYY-MM-DD">
+                            <input id="add-record-date" data-bind="textInput: date" type="date" pattern="\d{4}-\d{2}-\d{2}" required="" placeholder="YYYY-MM-DD">
                         </p>
                         <p>
                             <button data-bind="enable: valid">Add</button>
@@ -262,7 +262,7 @@
                                 <label for="options-budget-value">Value</label>
                             </p>
                             <p>
-                                <span class="currency" data-bind="text: monthlyExpenditures.currencyCode"></span>
+                                <span class="currency" data-bind="text: monthlyRecords.currencyCode"></span>
                                 <input id="options-budget-value" data-bind="textInput: budgetValue" type="number" step="0.01" min="0.00" required="" pattern="\d*\.\d{0,2}" placeholder="0.00">
                                 <button type="reset" tabindex="-1" data-bind="reset: true"></button>
                             </p>
@@ -308,7 +308,7 @@
                     <h1 data-bind="text: date"></h1>
                 </header>
                 <section data-type="list">
-                    <ul data-bind="foreach: expendituresList, attr: {'data-type': state}">
+                    <ul data-bind="foreach: recordsList, attr: {'data-type': state}">
                         <li>
                             <label class="pack-checkbox danger">
                                 <input type="checkbox" data-bind="checked: markedForDeletion"/>
@@ -316,7 +316,7 @@
                             </label>
                             <aside class="pack-end">
                                 <p>
-                                    <span data-bind="text: monthlyExpenditures.currencyCode"></span>
+                                    <span data-bind="text: monthlyRecords.currencyCode"></span>
                                     <span data-bind="text: value().toFixed(2)"></span>
                                 </p>
                             </aside>
@@ -332,7 +332,7 @@
                             <span class="icon icon-close">Close</span>
                         </a>
                         <menu type="toolbar">
-                            <a data-bind="click: deleteExpenditures">Delete</a>
+                            <a data-bind="click: deleteRecords">Delete</a>
                         </menu>
                         <h1 data-bind="text: date"></h1>
                     </header>

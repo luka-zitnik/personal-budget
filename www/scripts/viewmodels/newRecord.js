@@ -1,6 +1,6 @@
-var newExpenditure = {
+var newRecord = {
 
-    containerNode: document.getElementById("add-expenditure-view"),
+    containerNode: document.getElementById("add-record-view"),
     label: ko.observable(),
     value: ko.observable(),
     date: ko.observable(getCurrentDate()),
@@ -15,7 +15,7 @@ var newExpenditure = {
             value = parseFloat(this.value()),
             month = date.substring(0, 7);
 
-        monthlyExpenditures.updateMonthlyExpendituresList(
+        monthlyRecords.updateMonthlyRecordsList(
             month,
             date,
             value
@@ -55,9 +55,9 @@ function getCurrentDate() {
         + "-" + (currTime.getDate() < 10 ? "0" : "") + currTime.getDate();
 }
 
-newExpenditure.valid = ko.computed(function() {
+newRecord.valid = ko.computed(function() {
     this.value();
     this.label();
     this.date();
     return this.containerNode.querySelector("form").checkValidity();
-}.bind(newExpenditure));
+}.bind(newRecord));

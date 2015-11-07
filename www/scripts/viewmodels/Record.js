@@ -1,4 +1,4 @@
-var Expenditure = function(date, value, label, key) {
+var Record = function(date, value, label, key) {
 
     this.date = ko.observable(date);
     this.value = ko.observable(value);

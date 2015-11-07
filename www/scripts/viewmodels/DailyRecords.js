@@ -1,14 +1,14 @@
-function DailyExpenditures(month, dailyExpenditures) {
+function DailyRecords(month, dailyRecords) {
     var self = this;
 
-    this.dailyExpendituresList = ko.observableArray(dailyExpenditures);
+    this.dailyRecordsList = ko.observableArray(dailyRecords);
 
     this.monthlySum = ko.computed(function () {
         var i = 0,
             sum = 0;
 
-        for (; i < self.dailyExpendituresList().length; ++i) {
-            sum += self.dailyExpendituresList()[i].dailySum();
+        for (; i < self.dailyRecordsList().length; ++i) {
+            sum += self.dailyRecordsList()[i].dailySum();
         }
 
         return sum;
@@ -16,13 +16,13 @@ function DailyExpenditures(month, dailyExpenditures) {
 
     this.month = month;
 
-    this.updateDailyExpendituresList = function (date, value) {
+    this.updateDailyRecordsList = function (date, value) {
         var dailySum = this.findDailySum(date);
 
         if ((dailySum instanceof DailySum) === false) {
             dailySum = new DailySum(date, value);
-            this.dailyExpendituresList.push(dailySum);
-            this.dailyExpendituresList.sort(function(x, y) {
+            this.dailyRecordsList.push(dailySum);
+            this.dailyRecordsList.sort(function(x, y) {
                 return x.date <= y.date;
             });
         }
@@ -32,7 +32,7 @@ function DailyExpenditures(month, dailyExpenditures) {
     };
 
     this.findDailySum = function (date) {
-        var list = this.dailyExpendituresList(),
+        var list = this.dailyRecordsList(),
             i = 0;
 
         for (; i < list.length; ++i) {
