@@ -95,7 +95,12 @@ var options = {
 
     openCurrencySelector: function() {
         currencySelector.open();
-    }
+    },
+
+	resetRecords: function() {
+			store.clear();
+			monthlyRecords.list();
+	}
 
 };
 

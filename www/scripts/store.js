@@ -130,5 +130,22 @@ var store = {
 
         objectStore = db.createObjectStore(this.storeName, {autoIncrement: true});
         objectStore.createIndex("date", "date", {unique: false});
-    }
+    },
+
+	clear: function () {
+		if(confirm("Are you sure you really want to delete all records?")) {
+			var self = this,
+				openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
+
+			openDBRequest.onerror = this.dbErrorHandler;
+
+			openDBRequest.onsuccess = function(event) {
+				var db = event.target.result,
+					transaction = db.transaction(self.storeName, "readwrite"),
+					objectStore = transaction.objectStore(self.storeName);
+
+				objectStore.clear();
+			};
+		}
+	}
 };
