@@ -1,6 +1,7 @@
 var newRecord = {
 
     containerNode: document.getElementById("add-record-view"),
+    type: ko.observable("-1"),
     label: ko.observable(),
     value: ko.observable(),
     date: ko.observable(getCurrentDate()),
@@ -12,7 +13,7 @@ var newRecord = {
     add: function () {
         var date = this.date(),
             label = this.label() || "",
-            value = parseFloat(this.value()),
+            value = parseFloat(this.value()) * this.type(),
             month = date.substring(0, 7);
 
         monthlyRecords.updateMonthlyRecordsList(
@@ -30,6 +31,7 @@ var newRecord = {
     },
 
     reset: function() {
+        this.type("-1");
         this.label(undefined);
         this.value(undefined);
         this.date(getCurrentDate());

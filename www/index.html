@@ -209,6 +209,15 @@
                 <section>
                     <form data-type="add" data-bind="submit: add">
                         <p>
+                            <label for="add-record-type">Type</label>
+                        </p>
+                        <p>
+                            <select id="add-record-type" data-bind="value: type">
+                                <option value="-1">Expense</option>
+                                <option value="1">Saving</option>
+                            </select>
+                        </p>
+                        <p>
                             <label for="add-record-label">Label</label>
                         </p>
                         <p>
