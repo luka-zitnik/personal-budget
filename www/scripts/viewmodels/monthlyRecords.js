@@ -102,7 +102,7 @@ var monthlyRecords = {
 
 monthlyRecords.remaining = ko.computed(function() {
     var budgetStartDate = options.budgetStartDate(),
-        budgetValue = options.budgetValue(),
+        budgetValue = +options.budgetValue(),
         i = 0,
         sum = 0,
         j;
@@ -110,14 +110,14 @@ monthlyRecords.remaining = ko.computed(function() {
     for (; i < this.monthlyRecordsList().length; ++i) {
         for (j = 0; j < this.monthlyRecordsList()[i].dailyRecordsList().length; ++j) {
             if (this.monthlyRecordsList()[i].dailyRecordsList()[j].date < budgetStartDate) {
-                return budgetValue - sum;
+                return budgetValue + sum;
             }
 
             sum += this.monthlyRecordsList()[i].dailyRecordsList()[j].dailySum();
         }
     }
 
-    return budgetValue - sum;
+    return budgetValue + sum;
 }.bind(monthlyRecords));
 
 monthlyRecords.initialize();
