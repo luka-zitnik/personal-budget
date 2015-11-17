@@ -26,7 +26,9 @@ var store = {
 
         openDBRequest.onerror = this.dbErrorHandler;
 
-        openDBRequest.onupgradeneeded = this.dbUpgradeNeededHandler.bind(this);
+        openDBRequest.onupgradeneeded = function (event) {
+            self.dbUpgradeNeededHandler(event, this);
+        };
 
         openDBRequest.onsuccess = function (event) {
             var db = event.target.result,
@@ -136,13 +138,18 @@ var store = {
         window.alert(event.target.error.message);
     },
 
-    dbUpgradeNeededHandler: function (event) {
+    dbUpgradeNeededHandler: function (event, originalRequest) {
         var self = this,
             db = event.target.result,
+            successHandler = originalRequest.onsuccess,
             objectStore;
+
+        originalRequest.onsuccess = null;
 
         function exportOldExpendituresStore (doneCallback) {
             var openDBRequest = window.indexedDB.open("Expenditures", 1);
+
+            openDBRequest.onerror = self.dbErrorHandler;
 
             openDBRequest.onsuccess = function (event) {
                 var db = event.target.result,
@@ -173,12 +180,18 @@ var store = {
             };
         }
 
+        function completeAction () {
+            var openDBRequest = window.indexedDB.open(self.dbName, self.dbVersion);
+            openDBRequest.onerror = self.dbErrorHandler;
+            openDBRequest.onsuccess = successHandler;
+        }
+
         objectStore = db.createObjectStore(self.storeName, {autoIncrement: true});
         objectStore.createIndex("date", "date", {unique: false});
         exportOldExpendituresStore(function (storeValues) {
             self.add(storeValues, function () {
+                completeAction();
                 window.indexedDB.deleteDatabase("Expenditures");
-                window.location.reload();  // Cheap way to compensate for missing synchronization
             });
         });
     },
