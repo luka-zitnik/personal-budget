@@ -97,10 +97,10 @@ var options = {
         currencySelector.open();
     },
 
-	resetRecords: function() {
-			store.clear();
-			monthlyRecords.list();
-	}
+    clearAllRecords: function () {
+        store.clear();
+        monthlyRecords.list();
+    }
 
 };
 

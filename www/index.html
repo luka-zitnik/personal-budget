@@ -255,12 +255,12 @@
                         <h1>Options</h1>
                     </header>
                     <section>
+                        <header>
+                            <h2>Currency</h2>
+                        </header>
                         <ul>
                             <li>
-                                <label>
-                                    Currency
-                                    <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
-                                </label>
+                                <button type="button" class="icon icon-dialog" data-bind="text: currencyCode, click: openCurrencySelector"></button>
                             </li>
                         </ul>
                         <header>
@@ -281,8 +281,13 @@
                                     <input data-bind="textInput: budgetStartDate" type="date" required="" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                                 </label>
                             </p>
+                        </form>
+                        <header>
+                            <h2>Reset</h2>
+                        </header>
+                        <form data-type="options">
                             <p>
-                                <button type="button" class="icon icon-dialog" data-bind="click: resetRecords">reset records</button>
+                                <button type="button" class="danger" data-bind="click: clearAllRecords">Clear All Records</button>
                             </p>
                         </form>
                     </section>
