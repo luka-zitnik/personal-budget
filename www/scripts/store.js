@@ -193,6 +193,7 @@ var store = {
                 self.add(storeValues, function () {
                     completeAction();
                     window.indexedDB.deleteDatabase("Expenditures");
+                    window.alert("In order to be separated from savings, all your expenses now take negative values.");
                 });
             });
         };
