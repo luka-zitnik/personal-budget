@@ -188,12 +188,15 @@ var store = {
 
         objectStore = db.createObjectStore(self.storeName, {autoIncrement: true});
         objectStore.createIndex("date", "date", {unique: false});
-        exportOldExpendituresStore(function (storeValues) {
-            self.add(storeValues, function () {
-                completeAction();
-                window.indexedDB.deleteDatabase("Expenditures");
+        objectStore.transaction.oncomplete = function () {
+            exportOldExpendituresStore(function (storeValues) {
+                self.add(storeValues, function () {
+                    completeAction();
+                    window.indexedDB.deleteDatabase("Expenditures");
+                });
             });
-        });
+        };
+
     },
 
 	clear: function () {
