@@ -211,13 +211,28 @@
                         <p>
                             <label for="add-record-type">Type</label>
                         </p>
-                        <p>
-                            <select id="add-record-type" data-bind="value: type">
-                                <option value="-1">Expense</option>
-                                <option value="1">Saving</option>
-                            </select>
-                        </p>
-                        <p>
+						<section data-type="list">
+							<ul>
+								<li>
+									<aside class="pack-end">
+									<label class="pack-radio">
+										<input type="radio" name="add-record-type" value="-1" id="expense_radio" checked>
+										<span></span>
+									</label>
+									</aside>
+									<label style="margin: 0" for="expense_radio"><p>Expense</p></label>
+								</li>
+								<li>
+									<aside class="pack-end">
+									<label class="pack-radio">
+										<input type="radio" name="add-record-type" value="1" id="saving_radio">
+										<span></span>
+									</label>
+									</aside>
+									<label style="margin: 0" for="saving_radio"><p>Savings</p></label>
+								</li>
+							</ul>
+						</section>
                             <label for="add-record-label">Label</label>
                         </p>
                         <p>
