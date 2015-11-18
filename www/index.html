@@ -113,6 +113,16 @@
             progress[value="100"] {
                 display: none !important;
             }
+            label.pack-radio input ~ span {
+                line-height: 5rem;
+            }
+            p label.pack-radio {
+                width: calc(100% - 1.3rem);
+            }
+            p label.pack-radio input ~ span::after {
+                left: auto;
+                right: 0%;
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />
@@ -209,30 +219,18 @@
                 <section>
                     <form data-type="add" data-bind="submit: add">
                         <p>
-                            <label for="add-record-type">Type</label>
+                            <label class="pack-radio">
+                                <input type="radio" name="add-record-type" value="-1" data-bind="checked: type">
+                                <span>Expense</span>
+                            </label>
                         </p>
-						<section data-type="list">
-							<ul>
-								<li>
-									<aside class="pack-end">
-									<label class="pack-radio">
-										<input type="radio" name="add-record-type" value="-1" id="expense_radio" checked>
-										<span></span>
-									</label>
-									</aside>
-									<label style="margin: 0" for="expense_radio"><p>Expense</p></label>
-								</li>
-								<li>
-									<aside class="pack-end">
-									<label class="pack-radio">
-										<input type="radio" name="add-record-type" value="1" id="saving_radio">
-										<span></span>
-									</label>
-									</aside>
-									<label style="margin: 0" for="saving_radio"><p>Savings</p></label>
-								</li>
-							</ul>
-						</section>
+                        <p>
+                            <label class="pack-radio">
+                                <input type="radio" name="add-record-type" value="1" data-bind="checked: type">
+                                <span>Saving</span>
+                            </label>
+                        </p>
+                        <p>
                             <label for="add-record-label">Label</label>
                         </p>
                         <p>
