@@ -130,6 +130,10 @@ var store = {
                 objectStore.add(storeValues[i]);
             }
 
+            if (doneCallback === undefined) {
+                return;
+            }
+
             doneCallback();
         };
     },
@@ -193,7 +197,7 @@ var store = {
                 self.add(storeValues, function () {
                     completeAction();
                     window.indexedDB.deleteDatabase("Expenditures");
-                    window.alert("In order to be separated from savings, all your expenses now take negative values.");
+                    window.alert("In order to be visually separated from savings, all your expenses now take negative values.");
                 });
             });
         };
