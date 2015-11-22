@@ -276,7 +276,7 @@ var currency = {
         var currencyCode = localStorage.getItem(this.storageKey);
 
         if (currencyCode === null) {
-            this.requestForDeviceLocation();
+            this.suggestCurrencyThrottled();
         }
 
         return currencyCode;
@@ -293,14 +293,13 @@ var currency = {
         }));
     },
 
-    requestForDeviceLocation: function() {
+    suggestCurrency: function() {
         var self = this;
 
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 this.proxyRequestForIsoCountryCode,
                 function(positionError) {
-                    self.suggestCurrencySelection();
                     console.warn(positionError);
                 }
             );
@@ -325,12 +324,10 @@ var currency = {
             currencySuggestion.open(currencyCode);
         }
         catch(error) {
-            this.suggestCurrencySelection();
             console.warn(error);
         }
-    },
-
-    suggestCurrencySelection: function() {
     }
 
 };
+
+currency.suggestCurrencyThrottled = _.throttle(currency.suggestCurrency, 1000, {trailing: false});
