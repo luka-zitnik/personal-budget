@@ -123,6 +123,11 @@
                 left: auto;
                 right: 0%;
             }
+            #daily-list-view ul > li > p:empty::before {
+                content: "unlabeled";
+                color: #A6A6A6; /* https://www.mozilla.org/en-US/styleguide/products/firefox-os/color/ */
+                font-style: italic;
+            }
         </style>
         <link rel="stylesheet" href="library/bb-69a6e9c/style/headers.css" />
         <link rel="stylesheet" href="library/bb-69a6e9c/style/lists.css" />

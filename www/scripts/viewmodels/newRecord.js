@@ -12,7 +12,7 @@ var newRecord = {
 
     add: function () {
         var date = this.date(),
-            label = this.label() || "",
+            label = (this.label() || "").trim(),
             value = parseFloat(this.value()) * this.type(),
             month = date.substring(0, 7);
 
