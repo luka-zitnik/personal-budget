@@ -2,9 +2,9 @@
 
 # Personal Budget
 
-> Arrange your budget and watch balance changes as you note down your current expenditures.
+> Arrange your budget and watch balance changes as you note down your current expenditures and savings.
 
-# How do I get set up?
+## How do I set up?
 
 Start making changes right after checkout.
 
@@ -16,8 +16,14 @@ npm install
 grunt build
 ```
 
+## Reporting a bug
+Send me an email, or open a [new GitHub issue](https://github.com/luka-zitnik/personal-budget/issues/new), and describe your problem.
+
 ## Release History
 Release Date | Release Version | Description
 ------------------|----------------------|---------------
-2014-11-16 | 0.1
+2015-11-?? | 0.2 | Added savings and reset button
+2014-11-16 | 0.1 | Initial version
 
+## Contribution acknowledgment
+Special thanks go to [Jan Knížek](https://github.com/knezi) for initiating and guiding version 0.2 of the app.
