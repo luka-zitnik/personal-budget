@@ -150,7 +150,7 @@ var store = {
 
         originalRequest.onsuccess = null;
 
-        function exportOldExpendituresStore (doneCallback) {
+        function exportOldExpendituresStore (doneCallback, nothingToExportCallback) {
             var openDBRequest = window.indexedDB.open("Expenditures", 1);
 
             openDBRequest.onerror = self.dbErrorHandler;
@@ -162,6 +162,7 @@ var store = {
                     aggregatedStoreValues;
 
                 if (db.objectStoreNames.length === 0) {
+                    nothingToExportCallback();
                     return;
                 }
 
@@ -199,7 +200,7 @@ var store = {
                     window.indexedDB.deleteDatabase("Expenditures");
                     window.alert("In order to be visually separated from savings, all your expenses now take negative values.");
                 });
-            });
+            }, completeAction);
         };
 
     },
