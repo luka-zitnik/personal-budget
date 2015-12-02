@@ -206,7 +206,7 @@ var store = {
     },
 
     clear: function () {
-        if (confirm("Are you sure you really want to delete all records?")) {
+        if (confirm("Are you sure you want to clear all records?")) {
             var self = this,
                 openDBRequest = window.indexedDB.open(this.dbName, this.dbVersion);
 
