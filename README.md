@@ -1,4 +1,4 @@
-![App icon](https://bytebucket.org/luka-zitnik/personal-budget/raw/0.1/icon-rounded.svg)
+![App icon](https://cdn.rawgit.com/luka-zitnik/personal-budget/3a16f690/icon-rounded.svg)
 
 # Personal Budget
 
